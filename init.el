@@ -32,8 +32,14 @@
      avy      ; Jump to things in Emacs tree-style.
      paredit  ; Minor mode for editing parentheses
      magit    ; It's Magit! An Emacs mode for Git.
+     cider    ; Clojure Interactive Development Environment that Rocks
+     clj-refactor ; A collection of simple clojure refactoring functions
      ))
   "List of packages to install on top of default Emacs.")
+
+(add-to-list 'package-pinned-packages
+             ;; Always install the stable version of cider
+             '(cider . "melpa-stable"))
 
 (dolist (p hs-package-list)
   (when (not (package-installed-p p))
@@ -132,10 +138,51 @@ Ideally, this will be ~/.emacs.d.")
      ;; commands by default. I want to retain this.
      (define-key paredit-mode-map (kbd "M-s") nil)))
 (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(eval-after-load 'clojure-mode
+  '(progn (add-hook 'clojure-mode-hook 'enable-paredit-mode)))
+(eval-after-load 'cider-repl
+  '(progn (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)))
 
 ;;; Magit
 ;; Provide a global keybinding for Magit
 (global-set-key (kbd "C-x g") 'magit-status)
+
+;;; Cider
+(eval-after-load 'cider-mode
+  '(progn
+     (defun cider-repl-prompt-on-newline (ns)
+       "Return a prompt string with newline.
+NS is the namespace information passed into the function by
+cider."
+       (concat ns ">\n"))
+
+     (setq cider-repl-history-file (concat tempfiles-dirname
+                                           "cider-history.txt")
+           cider-repl-history-size most-positive-fixnum
+           cider-repl-wrap-history t
+           cider-repl-prompt-function 'cider-repl-prompt-on-newline
+           nrepl-buffer-name-separator "-"
+           nrepl-buffer-name-show-port t
+           nrepl-log-messages t
+           cider-annotate-completion-candidates t
+           cider-completion-annotations-include-ns 'always
+           cider-show-error-buffer 'always
+           cider-prompt-for-symbol nil)
+
+     (add-hook 'cider-mode-hook 'eldoc-mode)))
+
+;;; Clj Refactor
+(eval-after-load 'clj-refactor
+  '(progn
+     (defun turn-on-clj-refactor ()
+       (clj-refactor-mode 1)
+       (cljr-add-keybindings-with-prefix "C-c m"))
+
+     (setq cljr-favor-prefix-notation nil)
+
+     (eval-after-load 'clojure-mode
+       '(progn
+          (add-hook 'clojure-mode-hook 'turn-on-clj-refactor)))))
 
 
 (provide 'init)
