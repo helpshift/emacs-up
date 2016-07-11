@@ -8,6 +8,9 @@
 
 ;;; Code:
 
+(when (version< emacs-version "24.4")
+  (error "Unsupported Emacs Version! Please upgrade to a newer Emacs.  Emacs installation instructions: https://www.gnu.org/software/emacs/download.html"))
+
 (require 'package)
 
 (add-to-list 'package-archives
