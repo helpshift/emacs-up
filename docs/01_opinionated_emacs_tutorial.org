@@ -1,0 +1,253 @@
+#+TITLE: An Opinionated Emacs Tutorial: Getting started fast.
+#+AUTHOR: Vedang Manerikar
+#+EMAIL: vedang@helpshift.com
+#+DATE: [2016-07-11 Mon]
+
+* What is Emacs?
+  - Emacs is a Lisp programming environment.
+  - ...which happens to be good for editing things.
+  - Notes for going through this file:
+    + If you see C-x :: this means that you should hold down the Ctrl
+         Key and press x.
+    + If you see M-x :: this means that you should hold down the Meta
+         Key (more on what this is in the next point) and press x.
+  - You should remap your Caps Lock key to become your Ctrl Key. You
+    can do this by going to:
+    *System Preferences* -> *Keyboard* -> *Modifier Keys*
+    -> _Change Caps Lock key to mean Ctrl_
+  - This configuration sets your Cmd key to be the Meta key inside
+    Emacs. So every time you are supposed to press the Meta key, you
+    should press the Cmd key.
+
+* A more important question: Why should you care?
+  You should care because the editor is one of the core tools you will
+  employ when programming. You will spend a large amount of your time
+  inside an editor. Therefore, you should choose a powerful editor and
+  master it.
+
+* Getting started with Emacs: Problems
+  - Completely different terminology.
+  - Unfamiliarity with configuration systems.
+    - Also, unfamiliarity with Lisp in general and elisp is particular.
+  - Lack of a comprehensive beginner guide outside of Emacs.
+  - Emacs defaults are not optimal.
+    - ...though it is getting better with every release.
+
+* Starter Kits vs Starting from scratch
+  - Without knowing how Emacs loads configuration, understanding
+    existing configuration is hard.
+  - Too hard to figure out where to start.
+  - We are going to fix that!
+
+* What is my 'init' file?
+  - ~/.emacs.d/init.el
+  - This loads extra config over the defaults when you start Emacs.
+
+* Basic Operations
+  - C-x C-f :: ~find-file~ Opens a file for editing.
+  - C-x C-s :: ~save-buffer~ Saves changes to disk.
+  - C-x C-c :: ~save-buffers-kill-terminal~ Exits Emacs
+  - C-x k :: ~kill-buffer~ Close a file
+
+* Terminology
+  - Buffers
+  - Windows
+  - Frames
+  - Other oddities
+    - Killing
+    - Yanking
+
+* A little theory: Modes
+  - Major Mode
+  - Minor Modes
+  - Composability
+
+* Helping yourself
+  - C-h :: The Great Emacs Self-Help system.
+  - <keybinding> C-h :: All bindings available within the specified
+    prefix binding.
+  - C-h f :: (function) Display documentation for the given function.
+  - C-h k :: (keys) Display the full documentation for the key sequence.
+  - C-h v :: (variable) Display the given variable's documentation and value.
+  - C-h w :: (command) Display which keystrokes invoke the given command (where-is).
+  - C-h P :: (package) Describe the given Emacs Lisp package.
+  - C-h p :: (topic) Find packages matching a given topic keyword.
+  - C-h t :: Comprehensive Emacs tutorial for getting started with Emacs.
+
+* Movement
+** Step, Step, Step
+   - C-f :: ~forward-char~
+   - C-b :: ~backward-char~
+   - C-n :: ~next-line~
+   - C-p :: ~previous-line~
+   - M-f :: ~forward-word~
+   - M-b :: ~backward-word~
+   - M-n :: advancing options (will be demo'd later)
+   - M-p :: retreating options (will be demo'd later)
+
+** More?
+   Emacs understands semantic groups.  Commands:
+   - C-a   :: ~beginning-of-line~
+   - C-e   :: ~end-of-line~
+   - M-a   :: ~backward-sentence~
+   - M-e   :: ~forward-sentence~
+   - C-M-f :: ~forward-sexp~
+   - C-M-b :: ~backward-sexp~
+   - C-M-a :: ~beginning-of-defun~
+   - C-M-e :: ~end-of-defun~
+   - M-m   :: ~back-to-indentation~
+
+** What if you want to move N times?
+   The Optional Argument: Augument the behaviour of your functions.
+   - C-u     :: ~universal-argument~
+   - C-u <N> :: do this ~N~times (The N stands for a digit value)
+   - M-<N>   :: a shortcut to C-u <N>
+
+** Directional Editing aka Driving in Reverse
+   - M-- :: ~negative-argument~
+   - Favorite places of using this:
+     + M-c :: ~capitalize-word~
+     + M-l :: ~downcase-word~
+     + M-u :: ~upcase-word~
+
+** Final Notes
+   Optional and negative arguments are extremely powerful, and enable
+   surprisingly powerful movement. Be sure to try out these arguments
+   on the commands you regularly use.
+
+* Finding things
+** Jump to a point by searching for it.
+   This is a ton of text I don't care about:
+
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+    enim ad minim veniam, quis nostrud exercitation ullamco laboris
+    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat
+    nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+    sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+   I'd rather be here:
+
+   - C-s :: ~isearch-forward-regexp~
+   - C-r :: ~isearch-backward-regexp~
+   - isearch-lazy-highlight
+   - C-s :: ~isearch-repeat-forward~
+   - C-r :: ~isearch-repeat-backward~
+   - C-w :: ~isearch-yank-word-or-char~
+   - C-y :: ~isearch-yank-kill~
+
+** A segue into History: The Mark and the Point
+   - What is a mark?
+   - What is a point?
+   - What is a region?
+   - Jumping to marks
+     - C-SPC     :: ~set-mark-command~ (Drops a mark)
+     - C-u C-SPC :: (Jumps to previously dropped mark)
+     - C-x C-SPC :: ~pop-global-mark~
+   - How this ties into search: All non-deterministic movement drops a mark that can be followed back
+
+** Searching Redux : Occur
+   - M-s o :: ~occur~
+
+** A segue into Composability: next-error and prev-error
+   This minor mode is auto activated for any Results buffer: compilation, grep, occur are some examples.
+
+   - M-g M-n :: ~next-error~
+   - M-g M-p :: ~prev-error~
+
+** Searching Redux : Grep
+   Emacs implementation of Unix Grep
+   - M-x rgrep
+
+* Editing
+** Basics
+   - C-d :: ~delete-char~
+   - M-d :: ~kill-word~
+   - C-k :: ~kill-line~
+   - C-w :: ~kill-region~
+   - C-y :: ~yank~
+   - M-y :: ~yank-pop~
+   - M-w :: ~kill-ring-save~
+
+** Semantic Killing
+   - M-k   :: ~kill-sentence~
+   - C-M-k :: ~kill-sexp~
+
+** Regions and Rectangles
+   - C-w     :: ~kill-region~
+   - C-x r k :: ~kill-rectangle~
+
+** A segue into Rings
+   - What are rings?
+   - kill-ring, mark-ring, undo-ring, blah blah blah
+
+** query-replace-regex
+   - M-x query-replace-regex
+
+* Levelling up
+** Ido: Candidates for Completion
+   Interactive-do : The inbuilt super powerful completion and
+   suggestion feature.
+
+   - C-s   :: ~ido-next-match~
+   - C-r   :: ~ido-prev-match~
+   - C-SPC :: ~ido-restrict-to-matches~
+
+** Imenu : Suggestions for places to Jump to
+   - M-x imenu
+
+** A segue into temporary and permanent markers
+   - Registers
+     + C-x r SPC :: ~point-to-register~
+     + C-x r j   :: ~jump-to-register~
+     + C-x r s   :: ~copy-to-register~
+     + C-x r i   :: ~insert-register~
+   - Bookmarks
+     + C-x r m   :: ~bookmark-set~
+     + C-x r b   :: ~bookmark-jump~
+     + C-x r l   :: ~bookmark-list~
+
+** Helm : More completion and suggestion
+   - C-x c :: the default helm prefix key
+   - C-x c i :: ~helm-semantic-or-imenu~ (Access imenu via helm)
+   - M-y :: ~helm-show-kill-ring~ (Access the kill-ring via helm)
+   - C-x c r b :: ~helm-filtered-bookmarks~ (Access bookmarks via helm)
+   - C-x c r i :: ~helm-register~ (Access registers via helm)
+   - C-x c C-b :: ~helm-mini~ (Buffer and File selector via helm)
+
+** Avy: Jumping elsewhere
+   - M-g g :: ~avy-goto-line~ (Jump to line start or line number)
+   - M-g SPC :: ~avy-goto-word-1~ (Jump to a word by typing start CHAR)
+
+* Lispy Editing with Paredit
+   Open a clojure or emacs lisp file to try these commands out:
+   - ( :: opening brackets - excellent example of digit keys
+   - C-) :: ~paredit-forward-slurp-sexp~
+        #+begin_example
+          (foo (bar |baz) quux zot)
+            ->
+          (foo (bar |baz quux) zot)
+        #+end_example
+   - C-( :: ~paredit-backward-slurp-sexp~
+        #+begin_example
+          (foo bar (baz| quux) zot)
+            ->
+          (foo (bar baz| quux) zot)
+        #+end_example
+   - C-} :: ~paredit-forward-barf-sexp~
+        #+begin_example
+          (foo (bar |baz quux) zot)
+            ->
+          (foo (bar |baz) quux zot)
+        #+end_example
+   - C-{ :: ~paredit-backward-barf-sexp~
+        #+begin_example
+          (foo (bar baz |quux) zot)
+            ->
+          (foo bar (baz |quux) zot)
+        #+end_example
+   - @TODO :: entering and exiting
+   - @TODO :: splicing
+
+#  LocalWords:  Composability
