@@ -34,6 +34,7 @@
      magit    ; It's Magit! An Emacs mode for Git.
      cider    ; Clojure Interactive Development Environment that Rocks
      clj-refactor ; A collection of simple clojure refactoring functions
+     zenburn-theme ; A low contrast color theme for Emacs.
      ))
   "List of packages to install on top of default Emacs.")
 
@@ -183,6 +184,29 @@ cider."
      (eval-after-load 'clojure-mode
        '(progn
           (add-hook 'clojure-mode-hook 'turn-on-clj-refactor)))))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("40f6a7af0dfad67c0d4df2a1dd86175436d79fc69ea61614d668a635c2cd94ab" default)))
+ '(package-selected-packages
+   (quote
+    (clj-refactor cider magit paredit avy helm company better-defaults exec-path-from-shell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;;; Theme and Look
+;; This should load after `custom-safe-themes' to avoid Emacs
+;; panicking about whether it is safe or not.
+(load-theme 'zenburn)
 
 
 (provide 'init)
