@@ -77,6 +77,10 @@ Ideally, this will be ~/.emacs.d.")
       save-place-file (concat tempfiles-dirname "places")
       backup-directory-alist `(("." . ,(concat tempfiles-dirname "backups"))))
 
+;; `visible-bell' is broken on Emacs 24 downloaded from Mac for OSX
+(when (< emacs-major-version 25)
+  (setq visible-bell nil))
+
 ;;; Interactively Do Things
 ;; basic ido settings
 (require 'ido)
