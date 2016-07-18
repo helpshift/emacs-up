@@ -44,6 +44,9 @@
 (add-to-list 'package-pinned-packages
              ;; Always install the stable version of cider
              '(cider . "melpa-stable"))
+(add-to-list 'package-pinned-packages
+             ;; Always install the stable version of clj-refactor
+             '(clj-refactor . "melpa-stable"))
 
 (dolist (p hs-package-list)
   (when (not (package-installed-p p))
