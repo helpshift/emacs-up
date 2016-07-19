@@ -21,6 +21,11 @@
              t)
 
 (package-initialize)
+;; Pin certain packages to their stable versions. This needs to
+;; happen before `package-refresh-contents' to work properly.
+(add-to-list 'package-pinned-packages '(cider . "melpa-stable"))
+(add-to-list 'package-pinned-packages '(clj-refactor . "melpa-stable"))
+
 (unless package-archive-contents
   (package-refresh-contents))
 
@@ -40,13 +45,6 @@
      zenburn-theme ; A low contrast color theme for Emacs.
      ))
   "List of packages to install on top of default Emacs.")
-
-(add-to-list 'package-pinned-packages
-             ;; Always install the stable version of cider
-             '(cider . "melpa-stable"))
-(add-to-list 'package-pinned-packages
-             ;; Always install the stable version of clj-refactor
-             '(clj-refactor . "melpa-stable"))
 
 (dolist (p hs-package-list)
   (when (not (package-installed-p p))
