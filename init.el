@@ -191,6 +191,9 @@ cider."
            ; stops cljr from running tests when we connect to the repl
            cljr-eagerly-build-asts-on-startup nil)
 
+     ;; avoid running tests eargerly when we connect to nrepl
+     (setq cljr-eagerly-build-asts-on-startup nil)
+
      (eval-after-load 'clojure-mode
        '(progn
           (add-hook 'clojure-mode-hook 'turn-on-clj-refactor)))))
