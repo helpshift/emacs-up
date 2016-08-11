@@ -187,7 +187,9 @@ cider."
        (clj-refactor-mode 1)
        (cljr-add-keybindings-with-prefix "C-c m"))
 
-     (setq cljr-favor-prefix-notation nil)
+     (setq cljr-favor-prefix-notation nil
+           ; stops cljr from running tests when we connect to the repl
+           cljr-eagerly-build-asts-on-startup nil)
 
      (eval-after-load 'clojure-mode
        '(progn
