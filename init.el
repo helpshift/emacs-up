@@ -150,7 +150,10 @@ Ideally, this will be ~/.emacs.d.")
 (eval-after-load 'clojure-mode
   '(progn (add-hook 'clojure-mode-hook 'enable-paredit-mode)))
 (eval-after-load 'cider-repl
-  '(progn (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)))
+  '(progn (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
+          (define-key cider-repl-mode-map (kbd "C-M-q") 'prog-indent-sexp)
+          (define-key cider-repl-mode-map (kbd "C-c M-o")
+            'cider-repl-clear-buffer)))
 
 ;;; Magit
 ;; Provide a global keybinding for Magit
