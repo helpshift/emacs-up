@@ -7,12 +7,17 @@
   include other programming languages used within Helpshift.
 
 * Installation
-  - The minimum supported version for this configuration is Emacs
-    24.4. I recommend that you use Emacs 25 with this configuration.
-    You can install Emacs 25 through brew as follows:
+  - The minimum supported Emacs version for this configuration is
+    Emacs 24.4. I recommend that you use Emacs 25 with this
+    configuration. You can install Emacs 25 through brew as follows:
     #+begin_example
       $ brew install emacs --devel
     #+end_example
+  - The minimum supported Clojure version is ~1.7.0~. This is a hard
+    requirement of the ~cider~ package, from version ~0.11.0~ onward.
+    The last CIDER version to support Clojure 1.6 and below is
+    ~0.10.2~. However, this version does not exist in any public ELPA
+    repository (as of now).
   - Clone ~emacs-up~ to your machine as your ~.emacs.d~ folder.
     #+begin_example
       $ git clone https://github.com/helpshift/emacs-up.git ~/.emacs.d
