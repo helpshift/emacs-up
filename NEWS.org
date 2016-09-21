@@ -1,0 +1,15 @@
+
+* v0.1.0
+  This initial version of ~emacs-up~ is built around ~package.el~
+  which is the default package management system for Emacs.
+
+  However, a number of people within Helpshift are working on projects
+  which need to support Clojure versions below 1.7 (eg: projects which
+  depend on the Storm framework). Versions of CIDER - The Clojure
+  Interactive Development Environment that Rocks - which are available
+  in public package repositories do not support these older Clojure
+  versions.
+
+  Future development of ~emacs-up~ will move to ~el-get~, which allows
+  the developers to pin the version of the emacs package that they
+  want to install.
