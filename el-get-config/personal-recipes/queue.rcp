@@ -1,0 +1,4 @@
+(:name queue
+       :description "Queue data structure"
+       :pkgname "emacsmirror/queue"
+       :type github)

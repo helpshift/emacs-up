@@ -11,48 +11,6 @@
 (when (version< emacs-version "24.4")
   (error "Unsupported Emacs Version! Please upgrade to a newer Emacs.  Emacs installation instructions: https://www.gnu.org/software/emacs/download.html"))
 
-(require 'package)
-
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/")
-             t)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/")
-             t)
-
-(package-initialize)
-;; Pin certain packages to their stable versions. This needs to
-;; happen before `package-refresh-contents' to work properly.
-(add-to-list 'package-pinned-packages '(cider . "melpa-stable"))
-(add-to-list 'package-pinned-packages '(clj-refactor . "melpa-stable"))
-
-(unless package-archive-contents
-  (package-refresh-contents))
-
-(defvar hs-package-list
-  (append
-   (when (eq system-type 'darwin)
-     '(exec-path-from-shell ; Emacs plugin for dynamic PATH loading
-       ))
-   '(better-defaults ; Fixing weird quirks and poor defaults
-     company  ; Modular in-buffer completion framework for Emacs
-     helm     ; Emacs incremental completion and narrowing framework
-     avy      ; Jump to things in Emacs tree-style.
-     paredit  ; Minor mode for editing parentheses
-     magit    ; It's Magit! An Emacs mode for Git.
-     cider    ; Clojure Interactive Development Environment that Rocks
-     clj-refactor ; A collection of simple clojure refactoring functions
-     zenburn-theme ; A low contrast color theme for Emacs.
-     ))
-  "List of packages to install on top of default Emacs.")
-
-(dolist (p hs-package-list)
-  (when (not (package-installed-p p))
-    (package-install p)))
-
-;; Modify the CMD key to be my Meta key
-(setq mac-command-modifier 'meta)
-
 ;; Set a directory for temporary/state related files.
 (defvar dotfiles-dirname
   (file-name-directory (or load-file-name
@@ -66,14 +24,181 @@ Ideally, this will be ~/.emacs.d.")
 ;; Create the temp-files folder if necessary.
 (make-directory tempfiles-dirname t)
 
-;;; Exec PATH from Shell - Fix Emacs's understanding of the the Path
-;;; var on Mac.
-(when (and (eq system-type 'darwin)
-           (eq window-system 'ns))
-  (require 'exec-path-from-shell)
-  (exec-path-from-shell-initialize))
+;;; El-Get for great good.
+(defvar el-get-dir
+  (concat dotfiles-dirname "el-get/")
+  "The sub-directory where el-get packages are installed.")
 
-(require 'better-defaults)
+(defvar el-get-user-package-directory
+  (concat dotfiles-dirname "el-get-config/")
+  "The sub-directory where optional user-configuration for various packages, and user-defined recipes live.")
+
+(defvar el-get-my-recipes
+  (concat el-get-user-package-directory "personal-recipes/")
+  "The sub-directory where user-defined recipes live, if the user needs to define and install his/her own recipes.")
+
+;; Make the el-get directories if required
+(make-directory el-get-dir t)
+(make-directory el-get-my-recipes t)
+
+;; Add el-get to the load-path. From this point onward, we're plugged
+;; into the el-get package management system.
+(add-to-list 'load-path (concat el-get-dir "el-get"))
+
+;; Install el-get if it isn't already present
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (let (el-get-master-branch
+          el-get-install-skip-emacswiki-recipes)
+      (goto-char (point-max))
+      (eval-print-last-sexp))))
+
+;; Add our personal recipes to el-get's recipe path
+(add-to-list 'el-get-recipe-path el-get-my-recipes)
+
+;;; This is the order in which the packages are loaded. Changing this
+;;; order can sometimes lead to nasty surprises: eg: when you are
+;;; overshadowing some in-built libraries or when you expect a package
+;;; to already be loaded in order to fix system paths (*cough*
+;;; `exec-path-from-shell' *cough*)
+
+(setq el-get-sources
+      (append
+
+       (when (and (eq system-type 'darwin)
+                  (eq window-system 'ns))
+         ;; Emacs plugin for dynamic PATH loading - Fix Emacs's
+         ;; understanding of the the Path var on Mac.
+         '((:name exec-path-from-shell
+                  :after (progn (exec-path-from-shell-initialize)))))
+
+       '( ;; Fixing weird quirks and poor defaults
+         (:name better-defaults)
+
+         ;; Modular in-buffer completion framework for Emacs
+         (:name company-mode
+                :after (progn (require 'company)
+                              (add-hook 'after-init-hook 'global-company-mode)
+                              (setq-default company-lighter " cmp")
+                              (define-key company-active-map
+                                [tab] 'company-complete)
+                              (define-key company-active-map
+                                (kbd "TAB") 'company-complete)))
+
+         ;; Emacs incremental completion and narrowing framework
+         (:name helm
+                :after (progn ;; Explicitly turn off global `helm-mode'.
+                         ;; Only use it where required. Prefer `ido'
+                         ;; globally.
+                         (helm-mode -1)
+                         ;; Various useful key-bindings (other than Helm Defaults)
+                         ;; Useful Helm Defaults: C-x c i, C-x c I
+                         ;; unset this because I plan to use it as a prefix key.
+                         (global-set-key (kbd "C-x c r") nil)
+                         (global-set-key (kbd "C-x c r b") 'helm-filtered-bookmarks)
+                         (global-set-key (kbd "C-x c r r") 'helm-regexp)
+                         (global-set-key (kbd "C-x c C-b") 'helm-mini)
+                         (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+                         (global-set-key (kbd "C-x c SPC") 'helm-all-mark-rings)
+                         (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
+                         (global-set-key (kbd "C-x c r i") 'helm-register)))
+
+         ;; Jump to things in Emacs tree-style.
+         (:name avy
+                :after (progn (global-set-key (kbd "M-g g") 'avy-goto-line)
+                              (global-set-key (kbd "M-g SPC") 'avy-goto-word-1)
+                              (avy-setup-default)))
+
+         ;; Minor mode for editing parentheses
+         (:name paredit
+                :after (progn (eval-after-load 'paredit
+                                '(progn
+                                   ;; `(kbd "M-s")' is a prefix key for a
+                                   ;; bunch of search related commands by
+                                   ;; default. I want to retain this.
+                                   (define-key paredit-mode-map (kbd "M-s") nil)))
+                              (add-hook 'emacs-lisp-mode-hook
+                                        'enable-paredit-mode)))
+
+         ;; It's Magit! An Emacs mode for Git.
+         (:name magit
+                :after (progn (global-set-key (kbd "C-x g") 'magit-status)))
+
+         ;; Clojure Interactive Development Environment that Rocks
+         (:name cider
+                ;; v0.13.0 is untagged :(
+                :checkout "b8932a3"
+                :after (progn (eval-after-load 'clojure-mode
+                                '(progn (add-hook 'clojure-mode-hook
+                                                  'enable-paredit-mode)))
+                              (eval-after-load 'cider-repl
+                                '(progn (add-hook 'cider-repl-mode-hook
+                                                  'enable-paredit-mode)
+                                        (define-key cider-repl-mode-map
+                                          (kbd "C-M-q")
+                                          'prog-indent-sexp)
+                                        (define-key cider-repl-mode-map
+                                          (kbd "C-c M-o")
+                                          'cider-repl-clear-buffer)))
+                              (eval-after-load 'cider-mode
+                                '(progn
+                                   (defun cider-repl-prompt-on-newline (ns)
+                                     "Return a prompt string with newline.
+NS is the namespace information passed into the function by
+cider."
+                                     (concat ns ">\n"))
+
+                                   (setq cider-repl-history-file
+                                         (concat tempfiles-dirname "cider-history.txt")
+                                         cider-repl-history-size most-positive-fixnum
+                                         cider-repl-wrap-history t
+                                         cider-repl-prompt-function 'cider-repl-prompt-on-newline
+                                         nrepl-buffer-name-separator "-"
+                                         nrepl-buffer-name-show-port t
+                                         nrepl-log-messages t
+                                         cider-annotate-completion-candidates t
+                                         cider-completion-annotations-include-ns 'always
+                                         cider-show-error-buffer 'always
+                                         cider-prompt-for-symbol nil)
+
+                                   (add-hook 'cider-mode-hook 'eldoc-mode)))))
+
+         ;; A collection of simple clojure refactoring functions
+         (:name clj-refactor
+                ;; v2.2.0 is untagged
+                ;; actual 2.2.0 bump for `clj-refactor.el' => "531a09f"
+                ;; last `clj-refactor.el' commit where version is "2.2.0" =>
+                :checkout "a8d0f50"
+                :after (progn (defun turn-on-clj-refactor ()
+                                (clj-refactor-mode 1)
+                                (cljr-add-keybindings-with-prefix "C-c m"))
+
+                              (setq cljr-favor-prefix-notation nil
+                                    ;; stops cljr from running tests when
+                                    ;; we connect to the repl
+                                    cljr-eagerly-build-asts-on-startup nil)
+
+                              (eval-after-load 'clojure-mode
+                                '(progn
+                                   (add-hook 'clojure-mode-hook
+                                             'turn-on-clj-refactor)))))
+
+         ;; A low contrast color theme for Emacs.
+         (:name color-theme-zenburn))))
+
+(el-get 'sync
+        (mapcar 'el-get-source-name el-get-sources))
+
+;; Modify the CMD key to be my Meta key
+(setq mac-command-modifier 'meta)
+
+(require 'ido)
+(require 'recentf)
+(require 'saveplace)
+(when (= emacs-major-version 25)
+  (save-place-mode))
 
 ;; Move Emacs state into the temp folder we've created.
 (setq ido-save-directory-list-file (concat tempfiles-dirname "ido.last")
@@ -87,14 +212,11 @@ Ideally, this will be ~/.emacs.d.")
 
 ;;; Interactively Do Things
 ;; basic ido settings
-(require 'ido)
-
 (ido-mode t)
 (ido-everywhere)
 (setq ido-enable-flex-matching t
       ido-use-virtual-buffers t
-      ido-create-new-buffer 'always
-      ido-use-filename-at-point t)
+      ido-create-new-buffer 'always)
 (add-hook 'ido-make-buffer-list-hook 'ido-summary-buffers-to-end)
 
 ;; Ido power user settings
@@ -109,118 +231,18 @@ Ideally, this will be ~/.emacs.d.")
            (all-completions "" collection predicate)
            nil require-match initial-input hist def))))
 
-;;; Company - complete anything
-(require 'company)
-;; Enable company everywhere
-(add-hook 'after-init-hook 'global-company-mode)
-(setq-default company-lighter " cmp")
-(define-key company-active-map [tab] 'company-complete)
-(define-key company-active-map (kbd "TAB") 'company-complete)
-
-;;; Helm - Handy completion and narrowing
-;; Explicitly turn off global `helm-mode'
-(require 'helm-config)
-(helm-mode -1)
-
-;; Various useful key-bindings (other than Helm Defaults)
-(global-set-key (kbd "C-x c r") nil) ; unset this because I plan to
-                                        ; use it as a prefix key.
-(global-set-key (kbd "C-x c r b") 'helm-filtered-bookmarks)
-(global-set-key (kbd "C-x c r r") 'helm-regexp)
-(global-set-key (kbd "C-x c C-b") 'helm-mini)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(global-set-key (kbd "C-x c SPC") 'helm-all-mark-rings)
-(global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
-(global-set-key (kbd "C-x c r i") 'helm-register)
-;; Useful defaults: C-x c i, C-x c I
-
-;;; Avy
-(require 'avy)
-(global-set-key (kbd "M-g g") 'avy-goto-line)
-(global-set-key (kbd "M-g SPC") 'avy-goto-word-1)
-(avy-setup-default)
-
-;;; Paredit
-(eval-after-load 'paredit
-  '(progn
-     ;; `(kbd "M-s")' is a prefix key for a bunch of search related
-     ;; commands by default. I want to retain this.
-     (define-key paredit-mode-map (kbd "M-s") nil)))
-(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-(eval-after-load 'clojure-mode
-  '(progn (add-hook 'clojure-mode-hook 'enable-paredit-mode)))
-(eval-after-load 'cider-repl
-  '(progn (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
-          (define-key cider-repl-mode-map (kbd "C-M-q") 'prog-indent-sexp)
-          (define-key cider-repl-mode-map (kbd "C-c M-o")
-            'cider-repl-clear-buffer)))
-
-;;; Magit
-;; Provide a global keybinding for Magit
-(global-set-key (kbd "C-x g") 'magit-status)
-
-;;; Cider
-(eval-after-load 'cider-mode
-  '(progn
-     (defun cider-repl-prompt-on-newline (ns)
-       "Return a prompt string with newline.
-NS is the namespace information passed into the function by
-cider."
-       (concat ns ">\n"))
-
-     (setq cider-repl-history-file (concat tempfiles-dirname
-                                           "cider-history.txt")
-           cider-repl-history-size most-positive-fixnum
-           cider-repl-wrap-history t
-           cider-repl-prompt-function 'cider-repl-prompt-on-newline
-           nrepl-buffer-name-separator "-"
-           nrepl-buffer-name-show-port t
-           nrepl-log-messages t
-           cider-annotate-completion-candidates t
-           cider-completion-annotations-include-ns 'always
-           cider-show-error-buffer 'always
-           cider-prompt-for-symbol nil)
-
-     (add-hook 'cider-mode-hook 'eldoc-mode)))
-
-;;; Clj Refactor
-(eval-after-load 'clj-refactor
-  '(progn
-     (defun turn-on-clj-refactor ()
-       (clj-refactor-mode 1)
-       (cljr-add-keybindings-with-prefix "C-c m"))
-
-     (setq cljr-favor-prefix-notation nil
-           ; stops cljr from running tests when we connect to the repl
-           cljr-eagerly-build-asts-on-startup nil)
-
-     (eval-after-load 'clojure-mode
-       '(progn
-          (add-hook 'clojure-mode-hook 'turn-on-clj-refactor)))))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("40f6a7af0dfad67c0d4df2a1dd86175436d79fc69ea61614d668a635c2cd94ab" default)))
- '(package-selected-packages
-   (quote
-    (clj-refactor cider magit paredit avy helm company better-defaults exec-path-from-shell))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 ;;; Theme and Look
 ;; This should load after `custom-safe-themes' to avoid Emacs
 ;; panicking about whether it is safe or not.
-(load-theme 'zenburn)
+(load-theme 'zenburn t)
 
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(require 'package)
+(package-initialize)
 
 (provide 'init)
 ;;; init.el ends here
