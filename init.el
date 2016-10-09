@@ -8,7 +8,7 @@
 
 ;;; Code:
 
-(when (version< emacs-version "24.4")
+(when (version< emacs-version "25")
   (error "Unsupported Emacs Version! Please upgrade to a newer Emacs.  Emacs installation instructions: https://www.gnu.org/software/emacs/download.html"))
 
 ;; Set a directory for temporary/state related files.
@@ -150,8 +150,7 @@ Ideally, this will be ~/.emacs.d.")
 (require 'ido)
 (require 'recentf)
 (require 'saveplace)
-(when (= emacs-major-version 25)
-  (save-place-mode))
+(save-place-mode)
 
 ;; Move Emacs state into the temp folder we've created.
 (setq ido-save-directory-list-file (concat tempfiles-dirname "ido.last")

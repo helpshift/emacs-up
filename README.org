@@ -8,10 +8,9 @@
 
 * Installation
   - The minimum supported Emacs version for this configuration is
-    Emacs 24.4. I recommend that you use Emacs 25 with this
-    configuration. You can install Emacs 25 through brew as follows:
+    Emacs 25. You can install Emacs 25 through brew as follows:
     #+begin_example
-      $ brew install emacs --devel
+      $ brew install emacs
     #+end_example
   - Out of the box, ~emacs-up~ supports development on Clojure
     versions ~1.7~ and above. If you are someone who has to program
