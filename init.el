@@ -11,6 +11,14 @@
 (when (version< emacs-version "25")
   (error "Unsupported Emacs Version! Please upgrade to a newer Emacs.  Emacs installation instructions: https://www.gnu.org/software/emacs/download.html"))
 
+(defvar emacs-up--version "0.1.0"
+  "The current version of the Emacs Up Starter Kit.")
+
+(defun emacs-up-version ()
+  "Return the current version of the Emacs Up Starter Kit."
+  (interactive)
+  (message "Emacs Up %s" emacs-up--version))
+
 ;; Set a directory for temporary/state related files.
 (defvar dotfiles-dirname
   (file-name-directory (or load-file-name
