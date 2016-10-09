@@ -1,0 +1,5 @@
+(:name inflections
+       :description "Convert english words between singular and plural"
+       :pkgname "eschulte/jump.el"
+       :type github
+       :features inflections)
