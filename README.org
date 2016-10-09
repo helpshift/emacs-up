@@ -60,4 +60,9 @@
   - Fire up / Restart your Emacs and wait for it to download packages
     (This is a one-time thing).
 
+* Updating Emacs Up
+  The current version of ~emacs-up~ is ~v1.0.0~. If you are updating
+  an existing installation of ~emacs-up~, the ~NEWS.org~ file lists
+  major changes and update instructions.
+
 * Happy Programming! May the force be with you.

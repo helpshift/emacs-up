@@ -1,3 +1,14 @@
+* v1.0.0
+  This is a *Breaking Change* upgrade. I've made the following major
+  changes:
+  - Move to ~el-get~ as the package management system.
+  - Enable development against Clojure versions 1.6 and below (Find
+    instructions in the ~README.org~ file).
+  - Make Emacs 25 the minimum supported Emacs version.
+
+  To upgrade your ~emacs-up~, *delete your original installation* and
+  clone this repository from scratch. Follow the updated setup
+  instructions in the ~README.org~ file.
 
 * v0.1.0
   This initial version of ~emacs-up~ is built around ~package.el~
