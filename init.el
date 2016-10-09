@@ -58,6 +58,9 @@ Ideally, this will be ~/.emacs.d.")
 ;; Add our personal recipes to el-get's recipe path
 (add-to-list 'el-get-recipe-path el-get-my-recipes)
 
+;;; Load packaging info for clojure
+(require 'hs-clj-packages)
+
 ;;; This is the order in which the packages are loaded. Changing this
 ;;; order can sometimes lead to nasty surprises: eg: when you are
 ;;; overshadowing some in-built libraries or when you expect a package
@@ -126,70 +129,20 @@ Ideally, this will be ~/.emacs.d.")
          (:name magit
                 :after (progn (global-set-key (kbd "C-x g") 'magit-status)))
 
-         ;; Clojure Interactive Development Environment that Rocks
-         (:name cider
-                ;; v0.13.0 is untagged :(
-                :checkout "b8932a3"
-                :after (progn (eval-after-load 'clojure-mode
-                                '(progn (add-hook 'clojure-mode-hook
-                                                  'enable-paredit-mode)))
-                              (eval-after-load 'cider-repl
-                                '(progn (add-hook 'cider-repl-mode-hook
-                                                  'enable-paredit-mode)
-                                        (define-key cider-repl-mode-map
-                                          (kbd "C-M-q")
-                                          'prog-indent-sexp)
-                                        (define-key cider-repl-mode-map
-                                          (kbd "C-c M-o")
-                                          'cider-repl-clear-buffer)))
-                              (eval-after-load 'cider-mode
-                                '(progn
-                                   (defun cider-repl-prompt-on-newline (ns)
-                                     "Return a prompt string with newline.
-NS is the namespace information passed into the function by
-cider."
-                                     (concat ns ">\n"))
-
-                                   (setq cider-repl-history-file
-                                         (concat tempfiles-dirname "cider-history.txt")
-                                         cider-repl-history-size most-positive-fixnum
-                                         cider-repl-wrap-history t
-                                         cider-repl-prompt-function 'cider-repl-prompt-on-newline
-                                         nrepl-buffer-name-separator "-"
-                                         nrepl-buffer-name-show-port t
-                                         nrepl-log-messages t
-                                         cider-annotate-completion-candidates t
-                                         cider-completion-annotations-include-ns 'always
-                                         cider-show-error-buffer 'always
-                                         cider-prompt-for-symbol nil)
-
-                                   (add-hook 'cider-mode-hook 'eldoc-mode)))))
-
-         ;; A collection of simple clojure refactoring functions
-         (:name clj-refactor
-                ;; v2.2.0 is untagged
-                ;; actual 2.2.0 bump for `clj-refactor.el' => "531a09f"
-                ;; last `clj-refactor.el' commit where version is "2.2.0" =>
-                :checkout "a8d0f50"
-                :after (progn (defun turn-on-clj-refactor ()
-                                (clj-refactor-mode 1)
-                                (cljr-add-keybindings-with-prefix "C-c m"))
-
-                              (setq cljr-favor-prefix-notation nil
-                                    ;; stops cljr from running tests when
-                                    ;; we connect to the repl
-                                    cljr-eagerly-build-asts-on-startup nil)
-
-                              (eval-after-load 'clojure-mode
-                                '(progn
-                                   (add-hook 'clojure-mode-hook
-                                             'turn-on-clj-refactor)))))
-
          ;; A low contrast color theme for Emacs.
-         (:name color-theme-zenburn))))
+         (:name color-theme-zenburn))
+
+       (if use-older-clj-versions
+         ;; Set up recipes to support development against older Clojure
+           (progn (hs-cleanup-previous-install-if-necessary)
+                  hs-clojure16-env)
+         (progn (hs-cleanup-previous-install-if-necessary)
+                hs-latest-stable-clojure-env))))
 
 (el-get 'sync
         (mapcar 'el-get-source-name el-get-sources))
+
+(hs-store-clojure-env-ver use-older-clj-versions)
 
 ;; Modify the CMD key to be my Meta key
 (setq mac-command-modifier 'meta)

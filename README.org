@@ -13,11 +13,10 @@
     #+begin_example
       $ brew install emacs --devel
     #+end_example
-  - The minimum supported Clojure version is ~1.7.0~. This is a hard
-    requirement of the ~cider~ package, from version ~0.11.0~ onward.
-    The last CIDER version to support Clojure 1.6 and below is
-    ~0.10.2~. However, this version does not exist in any public ELPA
-    repository (as of now).
+  - Out of the box, ~emacs-up~ supports development on Clojure
+    versions ~1.7~ and above. If you are someone who has to program
+    against Clojure 1.6 or older versions, refer to the section below
+    this one on instructions to do that.
   - Clone ~emacs-up~ to your machine as your ~.emacs.d~ folder.
     #+begin_example
       $ git clone https://github.com/helpshift/emacs-up.git ~/.emacs.d
@@ -40,5 +39,26 @@
     one-time thing).
   - (For beginners) Go through the tutorial in the ~docs/~ folder to
     get started.
+
+* Developing against Clojure 1.6 and older versions
+  If you are developing against Clojure 1.6 or earlier, you need to
+  install older packages of CIDER, Clj-Refactor and Clojure
+  mode. Don't worry, I have you covered here.
+  - Open the file ~hs-clj-packages.el~ - at the top level in this
+    repository - and modify the value against ~use-older-clj-versions~
+    from ~nil~ to ~t~. (This is the first line of code in the file, so
+    it's at the very top).
+  - Create a ~.lein/profiles.clj~ file in your home directory.
+    + The contents of the file should be as follows:
+      #+begin_src clojure
+        {:repl {:plugins [[cider/cider-nrepl "0.10.2"]
+                          [refactor-nrepl "1.1.0"]]
+                :dependencies [^:replace [org.clojure/tools.nrepl "0.2.12"]]}}
+      #+end_src
+    + Changes will not apply to REPLs that are already running. After
+      creating the ~profiles.clj~ file, you need to stop and restart
+      running REPLs.
+  - Fire up / Restart your Emacs and wait for it to download packages
+    (This is a one-time thing).
 
 * Happy Programming! May the force be with you.
