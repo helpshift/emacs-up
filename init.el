@@ -59,7 +59,12 @@ Ideally, this will be ~/.emacs.d.")
 (add-to-list 'el-get-recipe-path el-get-my-recipes)
 
 ;;; Load packaging info for clojure
-(require 'hs-clj-packages)
+(defvar clj-packages-file
+  (concat dotfiles-dirname "hs-clj-packages.el")
+  "Information about packages to be installed for Clojure dev,
+  along with versions and other config.")
+
+(load clj-packages-file)
 
 ;;; This is the order in which the packages are loaded. Changing this
 ;;; order can sometimes lead to nasty surprises: eg: when you are
