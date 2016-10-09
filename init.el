@@ -133,9 +133,12 @@ Ideally, this will be ~/.emacs.d.")
          (:name color-theme-zenburn))
 
        (if use-older-clj-versions
-         ;; Set up recipes to support development against older Clojure
+           ;; Set up recipes to support development against older
+           ;; Clojure versions
            (progn (hs-cleanup-previous-install-if-necessary)
                   hs-clojure16-env)
+         ;; Set up recipes to support development against Clojure
+         ;; version 1.7 and above.
          (progn (hs-cleanup-previous-install-if-necessary)
                 hs-latest-stable-clojure-env))))
 
