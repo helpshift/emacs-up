@@ -69,7 +69,11 @@ cider."
              cider-annotate-completion-candidates t
              cider-completion-annotations-include-ns 'always
              cider-show-error-buffer 'always
-             cider-prompt-for-symbol nil)
+             cider-prompt-for-symbol nil
+             cider-apropos-actions
+             '(("find-def" . cider--find-var)
+               ("display-doc" . cider-doc-lookup)
+               ("lookup-on-grimoire" . cider-grimoire-lookup)))
 
        (add-hook 'cider-mode-hook 'eldoc-mode))))
 
