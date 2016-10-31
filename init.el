@@ -120,6 +120,24 @@ Ideally, this will be ~/.emacs.d.")
                          (global-set-key (kbd "C-x c SPC") 'helm-all-mark-rings)
                          (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
                          (global-set-key (kbd "C-x c r i") 'helm-register)))
+         (:name helm-ag
+                :after (progn (setq helm-ag-insert-at-point 'symbol
+                                    helm-ag-fuzzy-match t)
+                              (global-set-key (kbd "C-x c M-g a") 'helm-do-ag-project-root)
+                              (global-set-key (kbd "C-x c M-g s") 'helm-do-ag)
+                              ;; Move old behaviour to a new key
+                              (global-set-key (kbd "C-x c M-g g") 'helm-do-grep-ag)))
+         (:name helm-projectile
+                :after (progn (require 'helm-projectile)
+                              (projectile-mode)
+                              (setq projectile-completion-system 'helm
+                                    projectile-switch-project-action 'helm-projectile
+                                    projectile-enable-caching t
+                                    projectile-mode-line '(:eval (if (file-remote-p default-directory)
+                                                                     " "
+                                                                   (format " Ptl[%s]"
+                                                                           (projectile-project-name)))))
+                              (helm-projectile-on)))
 
          ;; Jump to things in Emacs tree-style.
          (:name avy

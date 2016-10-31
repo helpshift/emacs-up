@@ -8,7 +8,7 @@
 
 * Installation
   - The minimum supported Emacs version for this configuration is
-    Emacs 25. You can install Emacs 25 through brew as follows:
+    Emacs 25. You can install Emacs 25 through Homebrew as follows:
     #+begin_example
       $ brew install emacs
     #+end_example
@@ -36,6 +36,16 @@
       running REPLs.
   - Fire up Emacs and wait for it to download packages (This is a
     one-time thing).
+  - The ~helm-ag~ package in this config depends on Ag - The Silver
+    Searcher. Installing Ag will allow you to levarage super fast
+    searches on files and data from within Emacs. Installing this is
+    optional, not installing it will mean that only ~helm-ag~ will
+    cease to work. You can find instructions to install Ag here:
+    https://github.com/ggreer/the_silver_searcher. Install it from
+    Homebrew with:
+    #+begin_example
+      $ brew install the_silver_searcher
+    #+end_example
   - (For beginners) Go through the tutorial in the ~docs/~ folder to
     get started.
 
