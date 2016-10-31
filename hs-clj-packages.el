@@ -113,6 +113,22 @@ cider."
            :after (progn (load-clj-refactor-config))))
   "Return a list of stable `el-get-sources' for development against the latest Clojure.")
 
+(defvar hs--common-env
+  '(;; HELM interface to CIDER.
+    (:name helm-cider
+           :after (progn (eval-after-load 'cider-mode
+                           '(progn (helm-cider-mode 1)
+                                   (setq helm-cider-apropos-actions
+                                         '(("Find definition" lambda
+                                            (candidate)
+                                            (cider-find-var nil candidate))
+                                           ("CiderDoc" . cider-doc-lookup)
+                                           ("Find on Grimoire" . cider-grimoire-lookup)))
+                                   ;; define keys for apropos that follow helm conventions
+                                   (define-key cider-mode-map (kbd "C-x c d n") 'cider-browse-ns)
+                                   (define-key cider-mode-map (kbd "C-x c d a") 'cider-apropos)
+                                   (define-key cider-mode-map (kbd "C-x c d e") 'cider-apropos-documentation))))))
+  "Return a list of stable `el-get-sources' for development against Clojure (both latest as well as older versions of Clojure)")
 (defun hs-cleanup-previous-install-if-necessary ()
   "If Emacs packages have been installed for Clojure development,
   check if they are compatible with the Clojure we plan to work
