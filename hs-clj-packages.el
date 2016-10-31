@@ -86,7 +86,10 @@ cider."
   (setq cljr-favor-prefix-notation nil
         ;; stops cljr from running tests when
         ;; we connect to the repl
-        cljr-eagerly-build-asts-on-startup nil)
+        cljr-eagerly-build-asts-on-startup nil
+        ;; don't stop on analyzer failures. examples: not finding a
+        ;; data-reader.
+        cljr-ignore-analyzer-errors t)
 
   (eval-after-load 'clojure-mode
     '(progn
