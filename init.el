@@ -149,11 +149,11 @@ Ideally, this will be ~/.emacs.d.")
            ;; Set up recipes to support development against older
            ;; Clojure versions
            (progn (hs-cleanup-previous-install-if-necessary)
-                  hs-clojure16-env)
+                  (hs-clojure16-env))
          ;; Set up recipes to support development against Clojure
          ;; version 1.7 and above.
          (progn (hs-cleanup-previous-install-if-necessary)
-                hs-latest-stable-clojure-env))))
+                (hs-latest-stable-clojure-env)))))
 
 (el-get 'sync
         (mapcar 'el-get-source-name el-get-sources))

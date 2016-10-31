@@ -89,7 +89,7 @@ cider."
        (add-hook 'clojure-mode-hook
                  'turn-on-clj-refactor))))
 
-(defvar hs-clojure16-env
+(defvar hs--clojure16-env
   '(;; Clojure Interactive Development Environment that Rocks
     ;; First Change the dependencies to older versions
     (:name clojure-mode
@@ -102,7 +102,7 @@ cider."
            :after (progn (load-clj-refactor-config))))
   "Return a list of `el-get-sources' for development against Clojure 1.6.")
 
-(defvar hs-latest-stable-clojure-env
+(defvar hs--latest-stable-clojure-env
   '(;; Clojure Interactive Development Environment that Rocks
     (:name cider
            :checkout "v0.14.0"
@@ -129,6 +129,15 @@ cider."
                                    (define-key cider-mode-map (kbd "C-x c d a") 'cider-apropos)
                                    (define-key cider-mode-map (kbd "C-x c d e") 'cider-apropos-documentation))))))
   "Return a list of stable `el-get-sources' for development against Clojure (both latest as well as older versions of Clojure)")
+
+(defun hs-clojure16-env ()
+  "Return a list of `el-get-sources' for development against Clojure 1.6."
+  (append hs--clojure16-env hs--common-env))
+
+(defun hs-latest-stable-clojure-env ()
+  "Return a list of stable `el-get-sources' for development against the latest Clojure."
+  (append hs--latest-stable-clojure-env hs--common-env))
+
 (defun hs-cleanup-previous-install-if-necessary ()
   "If Emacs packages have been installed for Clojure development,
   check if they are compatible with the Clojure we plan to work
