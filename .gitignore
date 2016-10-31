@@ -2,3 +2,6 @@ temp-files/
 elpa/
 auto-save-list/
 el-get/
+backups/
+projectile-bookmarks.eld
+projectile.cache
