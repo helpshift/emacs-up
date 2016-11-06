@@ -11,7 +11,7 @@
 (when (version< emacs-version "25")
   (error "Unsupported Emacs Version! Please upgrade to a newer Emacs.  Emacs installation instructions: https://www.gnu.org/software/emacs/download.html"))
 
-(defvar emacs-up--version "1.0.0"
+(defvar emacs-up--version "v2.0.0"
   "The current version of the Emacs Up Starter Kit.")
 
 (defun emacs-up-version ()
@@ -120,6 +120,24 @@ Ideally, this will be ~/.emacs.d.")
                          (global-set-key (kbd "C-x c SPC") 'helm-all-mark-rings)
                          (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
                          (global-set-key (kbd "C-x c r i") 'helm-register)))
+         (:name helm-ag
+                :after (progn (setq helm-ag-insert-at-point 'symbol
+                                    helm-ag-fuzzy-match t)
+                              (global-set-key (kbd "C-x c M-g a") 'helm-do-ag-project-root)
+                              (global-set-key (kbd "C-x c M-g s") 'helm-do-ag)
+                              ;; Move old behaviour to a new key
+                              (global-set-key (kbd "C-x c M-g g") 'helm-do-grep-ag)))
+         (:name helm-projectile
+                :after (progn (require 'helm-projectile)
+                              (projectile-mode)
+                              (setq projectile-completion-system 'helm
+                                    projectile-switch-project-action 'helm-projectile
+                                    projectile-enable-caching t
+                                    projectile-mode-line '(:eval (if (file-remote-p default-directory)
+                                                                     " "
+                                                                   (format " Ptl[%s]"
+                                                                           (projectile-project-name)))))
+                              (helm-projectile-on)))
 
          ;; Jump to things in Emacs tree-style.
          (:name avy
@@ -165,12 +183,19 @@ Ideally, this will be ~/.emacs.d.")
 
 (require 'ido)
 (require 'recentf)
+(recentf-mode 1)
 (require 'saveplace)
 (save-place-mode)
 
+;; Recentf settings
+;; Use recentf via helm, invoke it with <C-x c C-c f>
+(setq recentf-exclude (list (concat tempfiles-dirname "*"))
+      recentf-save-file (concat tempfiles-dirname "recentf")
+      recentf-max-saved-items 1000
+      recentf-max-menu-items 1000)
+
 ;; Move Emacs state into the temp folder we've created.
 (setq ido-save-directory-list-file (concat tempfiles-dirname "ido.last")
-      recentf-save-file (concat tempfiles-dirname "recentf")
       save-place-file (concat tempfiles-dirname "places")
       backup-directory-alist `(("." . ,(concat tempfiles-dirname "backups"))))
 
