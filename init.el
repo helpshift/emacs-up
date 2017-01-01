@@ -160,6 +160,10 @@ Ideally, this will be ~/.emacs.d.")
          (:name magit
                 :after (progn (global-set-key (kbd "C-x g") 'magit-status)))
 
+         ;; Use ido (nearly) everywhere
+         ;; settings for this package are loaded below in the ido section.
+         (:name ido-ubiquitous)
+
          ;; A low contrast color theme for Emacs.
          (:name color-theme-zenburn))
 
@@ -207,22 +211,13 @@ Ideally, this will be ~/.emacs.d.")
 ;; basic ido settings
 (ido-mode t)
 (ido-everywhere)
+(require 'ido-ubiquitous)
+(ido-ubiquitous-mode 1)
+
 (setq ido-enable-flex-matching t
       ido-use-virtual-buffers t
       ido-create-new-buffer 'always)
 (add-hook 'ido-make-buffer-list-hook 'ido-summary-buffers-to-end)
-
-;; Ido power user settings
-(defadvice completing-read
-    (around ido-steroids activate)
-  "IDO on steroids :D from EmacsWiki."
-  (if (boundp 'ido-cur-list)
-      ad-do-it
-    (setq ad-return-value
-          (ido-completing-read
-           prompt
-           (all-completions "" collection predicate)
-           nil require-match initial-input hist def))))
 
 
 ;;; Theme and Look
