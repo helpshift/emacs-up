@@ -158,7 +158,8 @@ Ideally, this will be ~/.emacs.d.")
 
          ;; It's Magit! An Emacs mode for Git.
          (:name magit
-                :after (progn (global-set-key (kbd "C-x g") 'magit-status)))
+                :after (progn (global-set-key (kbd "C-x g") 'magit-status)
+                              (setq magit-completing-read-function 'magit-ido-completing-read)))
 
          ;; Use ido (nearly) everywhere
          ;; settings for this package are loaded below in the ido section.
