@@ -123,10 +123,10 @@ Ideally, this will be ~/.emacs.d.")
          (:name helm-ag
                 :after (progn (setq helm-ag-insert-at-point 'symbol
                                     helm-ag-fuzzy-match t)
-                              (global-set-key (kbd "C-x c M-g a") 'helm-do-ag-project-root)
-                              (global-set-key (kbd "C-x c M-g s") 'helm-do-ag)
+                              (global-set-key (kbd "C-x c g a") 'helm-do-ag-project-root)
+                              (global-set-key (kbd "C-x c g s") 'helm-do-ag)
                               ;; Move old behaviour to a new key
-                              (global-set-key (kbd "C-x c M-g g") 'helm-do-grep-ag)))
+                              (global-set-key (kbd "C-x c g g") 'helm-do-grep-ag)))
          (:name helm-projectile
                 :after (progn (require 'helm-projectile)
                               (projectile-mode)
