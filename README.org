@@ -71,7 +71,7 @@
     (This is a one-time thing).
 
 * Updating Emacs Up
-  The current version of ~emacs-up~ is ~v2.0.0~. If you are updating
+  The current version of ~emacs-up~ is ~v2.0.1~. If you are updating
   an existing installation of ~emacs-up~, the ~NEWS.org~ file lists
   major changes and update instructions.
 

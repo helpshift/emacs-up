@@ -1,3 +1,10 @@
+* v2.0.1
+  This is a minor, safe upgrade.
+** Changes:
+   - Change the key-bindings for using ~helm-ag~. Replace ~M-g~ with
+     ~g~ in the prefix key.
+   - Add the ~ido-ubiquitous~ library for Ido completions everywhere.
+
 * v2.0.0
   This is a *Breaking Change* (via version conflict) upgrade. I've
   upgraded the version of one of the packages that ~emacs-up~ depends

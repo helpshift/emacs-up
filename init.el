@@ -11,7 +11,7 @@
 (when (version< emacs-version "25")
   (error "Unsupported Emacs Version! Please upgrade to a newer Emacs.  Emacs installation instructions: https://www.gnu.org/software/emacs/download.html"))
 
-(defvar emacs-up--version "v2.0.0"
+(defvar emacs-up--version "v2.0.1"
   "The current version of the Emacs Up Starter Kit.")
 
 (defun emacs-up-version ()
@@ -123,10 +123,10 @@ Ideally, this will be ~/.emacs.d.")
          (:name helm-ag
                 :after (progn (setq helm-ag-insert-at-point 'symbol
                                     helm-ag-fuzzy-match t)
-                              (global-set-key (kbd "C-x c M-g a") 'helm-do-ag-project-root)
-                              (global-set-key (kbd "C-x c M-g s") 'helm-do-ag)
+                              (global-set-key (kbd "C-x c g a") 'helm-do-ag-project-root)
+                              (global-set-key (kbd "C-x c g s") 'helm-do-ag)
                               ;; Move old behaviour to a new key
-                              (global-set-key (kbd "C-x c M-g g") 'helm-do-grep-ag)))
+                              (global-set-key (kbd "C-x c g g") 'helm-do-grep-ag)))
          (:name helm-projectile
                 :after (progn (require 'helm-projectile)
                               (projectile-mode)
@@ -158,7 +158,12 @@ Ideally, this will be ~/.emacs.d.")
 
          ;; It's Magit! An Emacs mode for Git.
          (:name magit
-                :after (progn (global-set-key (kbd "C-x g") 'magit-status)))
+                :after (progn (global-set-key (kbd "C-x g") 'magit-status)
+                              (setq magit-completing-read-function 'magit-ido-completing-read)))
+
+         ;; Use ido (nearly) everywhere
+         ;; settings for this package are loaded below in the ido section.
+         (:name ido-ubiquitous)
 
          ;; A low contrast color theme for Emacs.
          (:name color-theme-zenburn))
@@ -207,22 +212,13 @@ Ideally, this will be ~/.emacs.d.")
 ;; basic ido settings
 (ido-mode t)
 (ido-everywhere)
+(require 'ido-ubiquitous)
+(ido-ubiquitous-mode 1)
+
 (setq ido-enable-flex-matching t
       ido-use-virtual-buffers t
       ido-create-new-buffer 'always)
 (add-hook 'ido-make-buffer-list-hook 'ido-summary-buffers-to-end)
-
-;; Ido power user settings
-(defadvice completing-read
-    (around ido-steroids activate)
-  "IDO on steroids :D from EmacsWiki."
-  (if (boundp 'ido-cur-list)
-      ad-do-it
-    (setq ad-return-value
-          (ido-completing-read
-           prompt
-           (all-completions "" collection predicate)
-           nil require-match initial-input hist def))))
 
 
 ;;; Theme and Look
