@@ -152,12 +152,12 @@ cider."
   (cond ((and use-older-clj-versions
               (not use-older-clj-packages))
          (mapcar 'el-get-remove
-                 (mapcar 'el-get-source-name hs-clojure16-env)))
+                 (mapcar 'el-get-source-name (hs-clojure16-env))))
 
         ((and (not use-older-clj-versions)
               use-older-clj-packages)
          (mapcar 'el-get-remove
-                 (mapcar 'el-get-source-name hs-clojure16-env)))))
+                 (mapcar 'el-get-source-name (hs-clojure16-env))))))
 
 
 (provide 'hs-clj-packages)
