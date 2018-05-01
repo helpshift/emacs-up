@@ -151,6 +151,13 @@ Ideally, this will be ~/.emacs.d.")
                               (global-set-key (kbd "M-g SPC") 'avy-goto-word-1)
                               (avy-setup-default)))
 
+         ;; Use smex as a better alternative to M-x
+         (:name smex
+                :after (progn (global-set-key (kbd "M-x") 'smex)
+                              (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+                              ;; This is your old M-x.
+                              (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)))
+
          ;; Minor mode for editing parentheses
          (:name paredit
                 :after (progn (eval-after-load 'paredit
