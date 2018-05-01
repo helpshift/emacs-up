@@ -112,11 +112,11 @@ cider."
 (defvar hs--latest-stable-clojure-env
   '(;; Clojure Interactive Development Environment that Rocks
     (:name cider
-           :checkout "v0.14.0"
+           :checkout "v0.16.0"
            :after (progn (load-cider-config)))
     ;; A collection of simple clojure refactoring functions
     (:name clj-refactor
-           :checkout "2.2.0"
+           :checkout "2.3.1"
            :after (progn (load-clj-refactor-config))))
   "Return a list of stable `el-get-sources' for development against the latest Clojure.")
 

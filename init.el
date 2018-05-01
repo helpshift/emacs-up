@@ -92,6 +92,11 @@ Ideally, this will be ~/.emacs.d.")
 
        '( ;; Fixing weird quirks and poor defaults
          (:name better-defaults)
+         
+         ;; cider cheat sheet, on which helm-cider depends, is not there in cider v16
+         (:name cider-cheatsheet
+                :type http
+                :url "https://raw.githubusercontent.com/clojure-emacs/cider/master/cider-cheatsheet.el")
 
          ;; Modular in-buffer completion framework for Emacs
          (:name company-mode
