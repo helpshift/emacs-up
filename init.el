@@ -124,7 +124,8 @@ Ideally, this will be ~/.emacs.d.")
                          (global-set-key (kbd "M-y") 'helm-show-kill-ring)
                          (global-set-key (kbd "C-x c SPC") 'helm-all-mark-rings)
                          (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
-                         (global-set-key (kbd "C-x c r i") 'helm-register)))
+                         (global-set-key (kbd "C-x c r i") 'helm-register)
+                         (global-set-key (kbd "M-i") 'helm-imenu)))
          (:name helm-ag
                 :after (progn (setq helm-ag-insert-at-point 'symbol
                                     helm-ag-fuzzy-match t)
