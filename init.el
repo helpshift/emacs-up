@@ -92,7 +92,11 @@ Ideally, this will be ~/.emacs.d.")
 
        '( ;; Fixing weird quirks and poor defaults
          (:name better-defaults)
-         
+
+         (:name seq-25
+                :type github
+                :pkgname "NicolasPetton/seq.el")
+
          ;; cider cheat sheet, on which helm-cider depends, is not there in cider v16
          (:name cider-cheatsheet
                 :type http
@@ -125,7 +129,7 @@ Ideally, this will be ~/.emacs.d.")
                          (global-set-key (kbd "C-x c SPC") 'helm-all-mark-rings)
                          (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
                          (global-set-key (kbd "C-x c r i") 'helm-register)
-                         (global-set-key (kbd "M-i") 'helm-imenu)))
+                         (global-set-key (kbd "C-x c i") 'helm-imenu)))
          (:name helm-ag
                 :after (progn (setq helm-ag-insert-at-point 'symbol
                                     helm-ag-fuzzy-match t)
