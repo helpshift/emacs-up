@@ -11,7 +11,7 @@
 (when (version< emacs-version "25")
   (error "Unsupported Emacs Version! Please upgrade to a newer Emacs.  Emacs installation instructions: https://www.gnu.org/software/emacs/download.html"))
 
-(defvar emacs-up--version "v2.0.1"
+(defvar emacs-up--version "v3.0.0"
   "The current version of the Emacs Up Starter Kit.")
 
 (defun emacs-up-version ()
@@ -154,7 +154,8 @@ Ideally, this will be ~/.emacs.d.")
                                    ;; `(kbd "M-s")' is a prefix key for a
                                    ;; bunch of search related commands by
                                    ;; default. I want to retain this.
-                                   (define-key paredit-mode-map (kbd "M-s") nil)))
+                                   (define-key paredit-mode-map (kbd "M-s") nil)
+                                   (define-key paredit-mode-map (kbd "C-o") 'paredit-open-round)))
                               (add-hook 'emacs-lisp-mode-hook
                                         'enable-paredit-mode)))
 
