@@ -70,6 +70,7 @@ cider."
              cider-completion-annotations-include-ns 'always
              cider-show-error-buffer 'always
              cider-prompt-for-symbol nil
+             cider-auto-jump-to-error 'errors-only
              cider-apropos-actions
              '(("find-def" . cider--find-var)
                ("display-doc" . cider-doc-lookup)
