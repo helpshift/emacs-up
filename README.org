@@ -13,9 +13,9 @@
       $ brew install emacs
     #+end_example
   - Out of the box, ~emacs-up~ supports development on Clojure
-    versions ~1.7~ and above. If you are someone who has to program
-    against Clojure 1.6 or older versions, refer to the section below
-    this one on instructions to do that.
+    versions ~1.8~ and above. If you are someone who has to program
+    against Clojure 1.7, 1.6 or older versions, refer to the section
+    below this one on instructions to do that.
   - Clone ~emacs-up~ to your machine as your ~.emacs.d~ folder.
     #+begin_example
       $ git clone https://github.com/helpshift/emacs-up.git ~/.emacs.d
@@ -23,9 +23,9 @@
   - Create a ~.lein/profiles.clj~ file in your home directory.
     + The contents of the file should be as follows:
       #+begin_src clojure
-        {:repl {:plugins [[cider/cider-nrepl "0.14.0"]
-                          [refactor-nrepl "2.2.0"]]
-                :dependencies [^:replace [org.clojure/tools.nrepl "0.2.12"]]}}
+        {:repl {:plugins [[cider/cider-nrepl "0.18.0"]
+                          [refactor-nrepl "2.4.0"]]
+                :dependencies [^:replace [org.clojure/tools.nrepl "0.2.13"]]}}
       #+end_src
     + You don't need the cider-nrepl or refactor-nrepl plugin section
       if you use ~cider-jack-in~ to start your REPL and connect to it.
