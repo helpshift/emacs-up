@@ -82,9 +82,8 @@ cider."
 (defun load-clj-refactor-config ()
   "Configuration for clj-refactor."
   (setq cljr-favor-prefix-notation nil
-        ;; stops cljr from running tests when
-        ;; we connect to the repl
-        cljr-eagerly-build-asts-on-startup nil
+        cljr-eagerly-build-asts-on-startup t
+        cljr-warn-on-eval nil
         ;; don't stop on analyzer failures. examples: not finding a
         ;; data-reader.
         cljr-ignore-analyzer-errors t)
