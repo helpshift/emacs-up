@@ -165,7 +165,7 @@ Ideally, this will be ~/.emacs.d.")
 
          ;; Use ido (nearly) everywhere
          ;; settings for this package are loaded below in the ido section.
-         (:name ido-ubiquitous)
+         (:name ido-completing-read-plus)
 
          ;; A low contrast color theme for Emacs.
          (:name color-theme-zenburn))
@@ -214,7 +214,7 @@ Ideally, this will be ~/.emacs.d.")
 ;; basic ido settings
 (ido-mode t)
 (ido-everywhere)
-(require 'ido-ubiquitous)
+(require 'ido-completing-read+)
 (ido-ubiquitous-mode 1)
 
 (setq ido-enable-flex-matching t
