@@ -63,9 +63,6 @@ cider."
              cider-repl-history-size most-positive-fixnum
              cider-repl-wrap-history t
              cider-repl-prompt-function 'cider-repl-prompt-on-newline
-             nrepl-buffer-name-separator "-"
-             nrepl-buffer-name-show-port t
-             nrepl-log-messages t
              cider-annotate-completion-candidates t
              cider-completion-annotations-include-ns 'always
              cider-show-error-buffer 'always
@@ -113,11 +110,11 @@ cider."
 (defvar hs--latest-stable-clojure-env
   '(;; Clojure Interactive Development Environment that Rocks
     (:name cider
-           :checkout "v0.14.0"
+           :checkout "v0.18.0"
            :after (progn (load-cider-config)))
     ;; A collection of simple clojure refactoring functions
     (:name clj-refactor
-           :checkout "2.2.0"
+           :checkout "2.4.0"
            :after (progn (load-clj-refactor-config))))
   "Return a list of stable `el-get-sources' for development against the latest Clojure.")
 
