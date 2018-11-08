@@ -128,6 +128,7 @@ Ideally, this will be ~/.emacs.d.")
                               ;; Move old behaviour to a new key
                               (global-set-key (kbd "C-x c g g") 'helm-do-grep-ag)))
          (:name helm-projectile
+                :before (progn (setq projectile-keymap-prefix (kbd "C-x c p")))
                 :after (progn (require 'helm-projectile)
                               (projectile-mode)
                               (setq projectile-completion-system 'helm
@@ -139,6 +140,8 @@ Ideally, this will be ~/.emacs.d.")
                                                                      " "
                                                                    (format " Ptl[%s]"
                                                                            (projectile-project-name)))))
+                              ;; I want to use <C-x c p> for helm-projectile
+                              (global-set-key (kbd "C-x c P") 'helm-list-emacs-process)
                               (helm-projectile-on)))
 
          ;; Jump to things in Emacs tree-style.
