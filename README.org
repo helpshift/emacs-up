@@ -23,7 +23,7 @@
   - Create a ~.lein/profiles.clj~ file in your home directory.
     + The contents of the file should be as follows:
       #+begin_src clojure
-        {:repl {:plugins [[cider/cider-nrepl "0.18.0"]
+        {:user {:plugins [[cider/cider-nrepl "0.18.0"]
                           [refactor-nrepl "2.4.0"]]
                 :dependencies [^:replace [org.clojure/tools.nrepl "0.2.13"]]}}
       #+end_src
