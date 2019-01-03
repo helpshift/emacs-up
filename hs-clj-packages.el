@@ -9,31 +9,33 @@
 
 ;;; Code:
 
-(defvar use-older-clj-versions nil
-  "Variable to indicate that you work on Clojure 1.6 or below.
-Supporting development for Clojure 1.6 or below requires
-installing and setting up older versions of `cider',
-`clojure-mode' and `clj-refactor'.  Set this variable to 't' if
-you are working against older Clojure versions.")
+(defvar clj-version "clj18+"
+  "Variable to indicate the version of Clojure that you work on.
 
-(defvar use-older-clj-packages nil
-  "Variable to indicate whether you are currently using older or
-newer versions of `cider', `clojure-mode' and `clj-refactor'.
-Set this variable to 't' if you are working against older Clojure
-versions.")
+The default value is `clj18+'. Other possible values are `clj17'
+and `clj16-'. Supporting development for Clojure 1.6 or below
+requires installing and setting up older versions of `cider',
+`clojure-mode' and `clj-refactor'. Set this variable to 'clj17'
+if you are working against Clojure 1.7. Set this variable to
+'clj16-' if you are working against Clojure 1.6 or older.")
+
+(defvar installed-clj-packages-version "clj18+"
+  "Variable to indicate the current version of installed clj-packages.
+
+This variable is automatically set/reset by code based on the
+value of `clj-version'.")
 
 (defvar clj-packages-install-file
   (concat tempfiles-dirname ".clj-packages")
   "A file to store whether we are currently using old or new clj-packages.")
 
-;; Reset the `use-older-clj-packages' var to it's actual value:
+;; Reset the `installed-clj-packages-version' var to it's actual value:
 (load clj-packages-install-file 'noerror)
 
-(defun hs-store-clojure-env-ver (is-older-env-installed)
-  "Store the Clojure env version that we've installed.
-The variable IS-OLDER-ENV-INSTALLED is a boolean."
+(defun hs-store-clojure-env-ver ()
+  "Store the Clojure env version that we've installed."
   (with-temp-file clj-packages-install-file
-    (print `(setq use-older-clj-packages ,is-older-env-installed)
+    (print `(setq installed-clj-packages-version ,clj-version)
            (current-buffer))))
 
 (defun cider-repl-prompt-on-newline (ns)
@@ -94,9 +96,7 @@ cider."
                  'turn-on-clj-refactor))))
 
 (defvar hs--clojure16-env
-  '(;; Clojure Interactive Development Environment that Rocks
-    ;; First Change the dependencies to older versions
-    (:name clojure-mode
+  '((:name clojure-mode
            :checkout "5.1.0")
     (:name cider
            :checkout "v0.10.2"
@@ -104,12 +104,23 @@ cider."
     (:name clj-refactor
            :checkout "1.1.0"
            :after (progn (load-clj-refactor-config))))
-  "Return a list of `el-get-sources' for development against Clojure 1.6.")
+  "Return a list of `el-get-sources' for development against Clojure 1.6 and below.")
+
+(defvar hs--clojure17-env
+  '((:name clojure-mode
+           :checkout "5.6.0")
+    (:name cider
+           :checkout "v0.17.0"
+           :after (progn (load-cider-config)))
+    (:name clj-refactor
+           :checkout "2.3.1"
+           :after (progn (load-clj-refactor-config))))
+  "Return a list of `el-get-sources' for development against Clojure 1.7.")
 
 (defvar hs--latest-stable-clojure-env
   '(;; Clojure Interactive Development Environment that Rocks
     (:name cider
-           :checkout "v0.18.0"
+           :checkout "v0.19.0"
            :after (progn (load-cider-config)))
     ;; A collection of simple clojure refactoring functions
     (:name clj-refactor
@@ -135,26 +146,37 @@ cider."
   "Return a list of stable `el-get-sources' for development against Clojure (both latest as well as older versions of Clojure)")
 
 (defun hs-clojure16-env ()
-  "Return a list of `el-get-sources' for development against Clojure 1.6."
+  "Return a list of `el-get-sources' for development against Clojure 1.6 or less."
   (append hs--clojure16-env hs--common-env))
+
+(defun hs-clojure16-env ()
+  "Return a list of `el-get-sources' for development against Clojure 1.6 or less."
+  (append hs--clojure17-env hs--common-env))
 
 (defun hs-latest-stable-clojure-env ()
   "Return a list of stable `el-get-sources' for development against the latest Clojure."
   (append hs--latest-stable-clojure-env hs--common-env))
 
 (defun hs-cleanup-previous-install-if-necessary ()
-  "If Emacs packages have been installed for Clojure development,
-  check if they are compatible with the Clojure we plan to work
-  with."
-  (cond ((and use-older-clj-versions
-              (not use-older-clj-packages))
+  "Cleanup Emacs packages installed for Clojure development, if required."
+  (cond ((and (equal "clj16-" clj-version)
+              (not (equal "clj16-" installed-clj-packages-version)))
+         ;; Remove whatever may be installed by `hs-clojure16-env' (so
+         ;; that it will be cleanly installed again).
          (mapcar 'el-get-remove
                  (mapcar 'el-get-source-name (hs-clojure16-env))))
 
-        ((and (not use-older-clj-versions)
-              use-older-clj-packages)
+        ((and (equal "clj17" clj-version)
+              (not (equal "clj17" installed-clj-packages-version)))
+         ;; Remove whatever may be installed by `hs-clojure17-env' (so
+         ;; that it will be cleanly installed again).
          (mapcar 'el-get-remove
-                 (mapcar 'el-get-source-name (hs-clojure16-env))))))
+                 (mapcar 'el-get-source-name (hs-clojure17-env))))
+
+        ((and (equal "clj18+" clj-version)
+              (not (equal "clj18+" installed-clj-packages-version)))
+         (mapcar 'el-get-remove
+                 (mapcar 'el-get-source-name (hs-latest-stable-clojure-env))))))
 
 
 (provide 'hs-clj-packages)

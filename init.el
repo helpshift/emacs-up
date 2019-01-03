@@ -69,8 +69,9 @@ Ideally, this will be ~/.emacs.d.")
 ;;; Load packaging info for clojure
 (defvar clj-packages-file
   (concat dotfiles-dirname "hs-clj-packages.el")
-  "Information about packages to be installed for Clojure dev,
-  along with versions and other config.")
+  "Information about packages to be installed for Clojure development.
+
+Also contains along with versions and other config.")
 
 (load clj-packages-file)
 
@@ -174,20 +175,26 @@ Ideally, this will be ~/.emacs.d.")
          ;; A low contrast color theme for Emacs.
          (:name color-theme-zenburn))
 
-       (if use-older-clj-versions
-           ;; Set up recipes to support development against older
-           ;; Clojure versions
-           (progn (hs-cleanup-previous-install-if-necessary)
-                  (hs-clojure16-env))
-         ;; Set up recipes to support development against Clojure
-         ;; version 1.7 and above.
+       (cond
+        ;; Set up recipes to support development against older
+        ;; Clojure versions
+        ((equal "clj16-" clj-version)
          (progn (hs-cleanup-previous-install-if-necessary)
-                (hs-latest-stable-clojure-env)))))
+                (hs-clojure16-env)))
+        ;; Set up recipes to support development against Clojure
+        ;; version 1.7
+        ((equal "clj17" clj-version)
+         (progn (hs-cleanup-previous-install-if-necessary)
+                (hs-clojure17-env)))
+        ;; Latest Clojure
+        ((equal "clj18+" clj-version)
+         (progn (hs-cleanup-previous-install-if-necessary)
+                (hs-latest-stable-clojure-env))))))
 
 (el-get 'sync
         (mapcar 'el-get-source-name el-get-sources))
 
-(hs-store-clojure-env-ver use-older-clj-versions)
+(hs-store-clojure-env-ver)
 
 ;; Modify the CMD key to be my Meta key
 (setq mac-command-modifier 'meta)
@@ -210,9 +217,7 @@ Ideally, this will be ~/.emacs.d.")
       save-place-file (concat tempfiles-dirname "places")
       backup-directory-alist `(("." . ,(concat tempfiles-dirname "backups"))))
 
-;; `visible-bell' is broken on Emacs 24 downloaded from Mac for OSX
-(when (< emacs-major-version 25)
-  (setq visible-bell nil))
+(setq visible-bell nil)
 
 ;;; Interactively Do Things
 ;; basic ido settings
