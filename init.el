@@ -204,6 +204,8 @@ Also contains along with versions and other config.")
 (recentf-mode 1)
 (require 'saveplace)
 (save-place-mode)
+(require 'savehist)
+(savehist-mode 1)
 
 ;; Recentf settings
 ;; Use recentf via helm, invoke it with <C-x c C-c f>
@@ -215,7 +217,8 @@ Also contains along with versions and other config.")
 ;; Move Emacs state into the temp folder we've created.
 (setq ido-save-directory-list-file (concat tempfiles-dirname "ido.last")
       save-place-file (concat tempfiles-dirname "places")
-      backup-directory-alist `(("." . ,(concat tempfiles-dirname "backups"))))
+      backup-directory-alist `(("." . ,(concat tempfiles-dirname "backups")))
+      savehist-file (concat tempfiles-dirname "history"))
 
 (setq visible-bell nil)
 
