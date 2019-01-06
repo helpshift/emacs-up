@@ -11,7 +11,7 @@
 (when (version< emacs-version "25")
   (error "Unsupported Emacs Version! Please upgrade to a newer Emacs.  Emacs installation instructions: https://www.gnu.org/software/emacs/download.html"))
 
-(defvar emacs-up--version "v2.0.1"
+(defvar emacs-up--version "v3.0.0"
   "The current version of the Emacs Up Starter Kit.")
 
 (defun emacs-up-version ()
@@ -69,8 +69,9 @@ Ideally, this will be ~/.emacs.d.")
 ;;; Load packaging info for clojure
 (defvar clj-packages-file
   (concat dotfiles-dirname "hs-clj-packages.el")
-  "Information about packages to be installed for Clojure dev,
-  along with versions and other config.")
+  "Information about packages to be installed for Clojure development.
+
+Also contains along with versions and other config.")
 
 (load clj-packages-file)
 
@@ -128,15 +129,20 @@ Ideally, this will be ~/.emacs.d.")
                               ;; Move old behaviour to a new key
                               (global-set-key (kbd "C-x c g g") 'helm-do-grep-ag)))
          (:name helm-projectile
+                :before (progn (setq projectile-keymap-prefix (kbd "C-x c p")))
                 :after (progn (require 'helm-projectile)
                               (projectile-mode)
                               (setq projectile-completion-system 'helm
                                     projectile-switch-project-action 'helm-projectile
                                     projectile-enable-caching t
+                                    projectile-cache-file (concat tempfiles-dirname "projectile.cache")
+                                    projectile-known-projects-file (concat tempfiles-dirname "projectile-bookmarks.eld")
                                     projectile-mode-line '(:eval (if (file-remote-p default-directory)
                                                                      " "
                                                                    (format " Ptl[%s]"
                                                                            (projectile-project-name)))))
+                              ;; I want to use <C-x c p> for helm-projectile
+                              (global-set-key (kbd "C-x c P") 'helm-list-emacs-process)
                               (helm-projectile-on)))
 
          ;; Jump to things in Emacs tree-style.
@@ -152,7 +158,8 @@ Ideally, this will be ~/.emacs.d.")
                                    ;; `(kbd "M-s")' is a prefix key for a
                                    ;; bunch of search related commands by
                                    ;; default. I want to retain this.
-                                   (define-key paredit-mode-map (kbd "M-s") nil)))
+                                   (define-key paredit-mode-map (kbd "M-s") nil)
+                                   (define-key paredit-mode-map (kbd "C-o") 'paredit-open-round)))
                               (add-hook 'emacs-lisp-mode-hook
                                         'enable-paredit-mode)))
 
@@ -163,25 +170,31 @@ Ideally, this will be ~/.emacs.d.")
 
          ;; Use ido (nearly) everywhere
          ;; settings for this package are loaded below in the ido section.
-         (:name ido-ubiquitous)
+         (:name ido-completing-read-plus)
 
          ;; A low contrast color theme for Emacs.
          (:name color-theme-zenburn))
 
-       (if use-older-clj-versions
-           ;; Set up recipes to support development against older
-           ;; Clojure versions
-           (progn (hs-cleanup-previous-install-if-necessary)
-                  (hs-clojure16-env))
-         ;; Set up recipes to support development against Clojure
-         ;; version 1.7 and above.
+       (cond
+        ;; Set up recipes to support development against older
+        ;; Clojure versions
+        ((equal "clj16-" clj-version)
          (progn (hs-cleanup-previous-install-if-necessary)
-                (hs-latest-stable-clojure-env)))))
+                (hs-clojure16-env)))
+        ;; Set up recipes to support development against Clojure
+        ;; version 1.7
+        ((equal "clj17" clj-version)
+         (progn (hs-cleanup-previous-install-if-necessary)
+                (hs-clojure17-env)))
+        ;; Latest Clojure
+        ((equal "clj18+" clj-version)
+         (progn (hs-cleanup-previous-install-if-necessary)
+                (hs-latest-stable-clojure-env))))))
 
 (el-get 'sync
         (mapcar 'el-get-source-name el-get-sources))
 
-(hs-store-clojure-env-ver use-older-clj-versions)
+(hs-store-clojure-env-ver)
 
 ;; Modify the CMD key to be my Meta key
 (setq mac-command-modifier 'meta)
@@ -191,6 +204,8 @@ Ideally, this will be ~/.emacs.d.")
 (recentf-mode 1)
 (require 'saveplace)
 (save-place-mode)
+(require 'savehist)
+(savehist-mode 1)
 
 ;; Recentf settings
 ;; Use recentf via helm, invoke it with <C-x c C-c f>
@@ -202,17 +217,16 @@ Ideally, this will be ~/.emacs.d.")
 ;; Move Emacs state into the temp folder we've created.
 (setq ido-save-directory-list-file (concat tempfiles-dirname "ido.last")
       save-place-file (concat tempfiles-dirname "places")
-      backup-directory-alist `(("." . ,(concat tempfiles-dirname "backups"))))
+      backup-directory-alist `(("." . ,(concat tempfiles-dirname "backups")))
+      savehist-file (concat tempfiles-dirname "history"))
 
-;; `visible-bell' is broken on Emacs 24 downloaded from Mac for OSX
-(when (< emacs-major-version 25)
-  (setq visible-bell nil))
+(setq visible-bell nil)
 
 ;;; Interactively Do Things
 ;; basic ido settings
 (ido-mode t)
 (ido-everywhere)
-(require 'ido-ubiquitous)
+(require 'ido-completing-read+)
 (ido-ubiquitous-mode 1)
 
 (setq ido-enable-flex-matching t

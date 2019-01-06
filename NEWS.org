@@ -1,3 +1,23 @@
+* v3.0.0
+  This is a *Breaking Change* (via version conflict) upgrade. I've
+  upgraded the version of one of the packages that ~emacs-up~ depends
+  upon, and upgrading your local setup may not be as straight-forward
+  as updating the repo from upstream.
+
+  The easiest way to upgrade reliably is to *delete your original
+  installation* and clone this repository from scratch.
+
+  Restart Emacs.
+** Changes:
+   - Update ~cider~ to the latest version (v0.19.0 - Raleigh)
+   - Update ~clj-refactor~ to the latest version (v2.4.0)
+   - Remove dead-code of previous ~cider~ versions
+   - Replace ~ido-ubiquitous~ with ~ido-completing-read+~
+   - Add a prefix for ~helm-projectile~ : ~C-x c p~. Move
+     ~helm-list-emacs-process~ to ~C-x c P~.
+   - Add instructions for supporting Dev against Clojure 1.7 (Cider
+     17).
+
 * v2.0.1
   This is a minor, safe upgrade.
 ** Changes:
