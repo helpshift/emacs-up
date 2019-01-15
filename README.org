@@ -8,9 +8,10 @@
 
 * Installation
   - The minimum supported Emacs version for this configuration is
-    Emacs 25. You can install Emacs 25 through Homebrew as follows:
+    Emacs 25. You can install the latest Emacs through Homebrew as
+    follows:
     #+begin_example
-      $ brew install emacs
+      $ brew install emacs --with-cocoa
     #+end_example
   - Out of the box, ~emacs-up~ supports development on Clojure
     versions ~1.8~ and Java ~8~ (and above). If you are someone who
@@ -23,7 +24,7 @@
   - Create a ~.lein/profiles.clj~ file in your home directory.
     + The contents of the file should be as follows:
       #+begin_src clojure
-        {:user {:plugins [[cider/cider-nrepl "0.19.0"]
+        {:user {:plugins [[cider/cider-nrepl "0.20.0"]
                           [refactor-nrepl "2.4.0"]]}}
       #+end_src
     + You don't need the cider-nrepl or refactor-nrepl plugin section
@@ -91,7 +92,7 @@
     (This is a one-time thing).
 
 * Updating Emacs Up
-  The current version of ~emacs-up~ is ~v3.0.0~. If you are updating
+  The current version of ~emacs-up~ is ~v3.1.0~. If you are updating
   an existing installation of ~emacs-up~, the ~NEWS.org~ file lists
   major changes and update instructions.
 
