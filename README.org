@@ -8,9 +8,10 @@
 
 * Installation
   - The minimum supported Emacs version for this configuration is
-    Emacs 25. You can install Emacs 25 through Homebrew as follows:
+    Emacs 25. You can install the latest Emacs through Homebrew as
+    follows:
     #+begin_example
-      $ brew install emacs
+      $ brew install emacs --with-cocoa
     #+end_example
   - Out of the box, ~emacs-up~ supports development on Clojure
     versions ~1.8~ and Java ~8~ (and above). If you are someone who
