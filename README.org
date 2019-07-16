@@ -11,7 +11,7 @@
     Emacs 25. You can install the latest Emacs through Homebrew as
     follows:
     #+begin_example
-      $ brew install emacs --with-cocoa
+      $ brew install emacs
     #+end_example
   - Out of the box, ~emacs-up~ supports development on Clojure
     versions ~1.8~ and Java ~8~ (and above). If you are someone who
@@ -21,10 +21,12 @@
     #+begin_example
       $ git clone https://github.com/helpshift/emacs-up.git ~/.emacs.d
     #+end_example
-  - Create a ~.lein/profiles.clj~ file in your home directory.
+  - Create a ~.lein/profiles.clj~ file in your home directory. *Note*:
+    You need a minimum lein version of ~2.8.3~. I recommend installing
+    the latest current lein (~2.9.1~ as of this point in time)
     + The contents of the file should be as follows:
       #+begin_src clojure
-        {:user {:plugins [[cider/cider-nrepl "0.20.0"]
+        {:user {:plugins [[cider/cider-nrepl "0.22.0-beta1"]
                           [refactor-nrepl "2.4.0"]]}}
       #+end_src
     + You don't need the cider-nrepl or refactor-nrepl plugin section
