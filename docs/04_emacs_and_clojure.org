@@ -30,4 +30,4 @@
   - [ ] jumping (Emacs)
   - [ ] searching in project / directory
   - [ ] debugging
-  - [ ] other keybindings in hsemacs
+  - [ ] other keybindings in helpshift/emacs-up
