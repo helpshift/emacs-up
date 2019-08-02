@@ -1,0 +1,33 @@
+#+TITLE: Emacs and Clojure
+#+AUTHOR: Vedang Manerikar
+#+EMAIL: vedang@helpshift.com
+#+DATE: [2018-11-01 Thu]
+
+* Basic Emacs Operations
+  - C-x C-f :: =find-file= Opens a file for editing.
+  - C-x C-s :: =save-buffer= Saves changes to disk.
+  - C-x C-c :: =save-buffers-kill-terminal= Exits Emacs.
+  - C-x k :: =kill-buffer= Close a file.
+
+* Basic Clojure Operations
+  - C-c M-c :: =cider-connect-clj= Connect to a Clojure Repl.
+  - C-c C-z :: =cider-switch-to-repl-buffer= Switch to the Repl from
+               inside a clj file (and vice-versa).
+  - C-c C-c :: =cider-eval-defun-at-point= Compile the function that
+               you are working in (in a clj file).
+  - M-. :: =cider-find-var= Jump to the definition of the symbol that
+           the cursor is on.
+
+* TODO [0/12] Add sections explaining how to do the following things
+  - [ ] jumping to source
+  - [ ] jumping to function definition
+  - [ ] paredit
+  - [ ] find-usages
+  - [ ] rename-symbols
+  - [ ] import / require
+  - [ ] clean namespaces
+  - [ ] eastwood
+  - [ ] jumping (Emacs)
+  - [ ] searching in project / directory
+  - [ ] debugging
+  - [ ] other keybindings in hsemacs
