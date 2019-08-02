@@ -18,6 +18,19 @@
   - This configuration sets your Cmd key to be the Meta key inside
     Emacs. So every time you are supposed to press the Meta key, you
     should press the Cmd key.
+  - You should remap your Lock Screen shortcut in Mac to free up
+    =C-M-q=. This is a critical shortcut for Lisp programming in
+    Emacs.
+    + Launch System Preferences and go to the Keyboard pane.
+    + Select the 'Shortcuts' tab.
+    + From the list on the left, select 'App Shortcuts'.
+    + Click on the plus (+) button below to add your new shortcut.
+    + In the dialog box we'll want to leave 'All Applications'
+      selected in the first menu. Enter 'Lock Screen' as the Menu
+      Title. Please note this has to be exactly the same name for this
+      to work. (It has to do with Automator entries in Mac). Finally,
+      enter your keyboard shortcut. Let's go with Option+Shift+Q
+    + Click Add and you're all done!
 
 * A more important question: Why should you care?
   You should care because the editor is one of the core tools you will
