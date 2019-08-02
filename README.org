@@ -11,7 +11,7 @@
     Emacs 25. You can install the latest Emacs through Homebrew as
     follows:
     #+begin_example
-      $ brew install emacs
+      $ brew cask install emacs
     #+end_example
   - Out of the box, ~emacs-up~ supports development on Clojure
     versions ~1.8~ and Java ~8~ (and above). If you are someone who
