@@ -155,10 +155,6 @@ Also contains along with versions and other config.")
          (:name paredit
                 :after (progn (eval-after-load 'paredit
                                 '(progn
-                                   ;; `(kbd "M-s")' is a prefix key for a
-                                   ;; bunch of search related commands by
-                                   ;; default. I want to retain this.
-                                   (define-key paredit-mode-map (kbd "M-s") nil)
                                    (define-key paredit-mode-map (kbd "C-o") 'paredit-open-round)))
                               (add-hook 'emacs-lisp-mode-hook
                                         'enable-paredit-mode)))
