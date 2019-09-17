@@ -26,7 +26,7 @@
     the latest current lein (~2.9.1~ as of this point in time)
     + The contents of the file should be as follows:
       #+begin_src clojure
-        {:user {:plugins [[cider/cider-nrepl "0.22.0-beta1"]
+        {:user {:plugins [[cider/cider-nrepl "0.22.3"]
                           [refactor-nrepl "2.4.0"]]}}
       #+end_src
     + You don't need the cider-nrepl or refactor-nrepl plugin section
