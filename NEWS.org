@@ -1,3 +1,16 @@
+* v3.2.0
+  This is not a breaking change. However, the easiest way to upgrade
+  safely is still to *delete your original installation* and clone
+  this repository from scratch. This will also get the latest versions
+  of dependent libraries (like ~clojure-mode~) (which is a good thing)
+** Changes
+   - Update ~cider~ to the latest version (v0.22.0 - Sao Paulo)
+   - Update ~cider-nrepl~ to the latest version (v0.22.3)
+   - Update Emacs Installation instructions
+     + Use ~brew cask~
+   - Add information about minimum lein version (v2.8.3)
+   - Let =M-s= remain bound under paredit.
+
 * v3.1.0
   This is not a breaking change. However, the easiest way to upgrade
   safely is still to *delete your original installation* and clone
