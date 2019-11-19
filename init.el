@@ -169,7 +169,14 @@ Also contains along with versions and other config.")
          (:name ido-completing-read-plus)
 
          ;; A low contrast color theme for Emacs.
-         (:name color-theme-zenburn))
+         (:name color-theme-zenburn)
+
+         ;; A collection of snippets for repetitive stuff
+         (:name yasnippet
+                :after (progn (yas-global-mode 1)
+                              (add-to-list 'hippie-expand-try-functions-list
+                                           'yas-hippie-try-expand)))
+         (:name yasnippet-snippets))
 
        (cond
         ;; Set up recipes to support development against older
