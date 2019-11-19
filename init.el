@@ -176,7 +176,21 @@ Also contains along with versions and other config.")
                 :after (progn (yas-global-mode 1)
                               (add-to-list 'hippie-expand-try-functions-list
                                            'yas-hippie-try-expand)))
-         (:name yasnippet-snippets))
+         (:name yasnippet-snippets)
+
+         ;; an Emacs jump to definition package for 40+ languages
+         (:name dumb-jump
+                :after (progn (dumb-jump-mode)
+                              (define-key dumb-jump-mode-map (kbd "C-c d g")
+                                'dumb-jump-go)
+                              (define-key dumb-jump-mode-map (kbd "C-c d b")
+                                'dumb-jump-back)
+                              (define-key dumb-jump-mode-map (kbd "C-c d q")
+                                'dumb-jump-quick-look)
+                              ;; Don't mess with the default
+                              ;; indentation keybinding
+                              (define-key dumb-jump-mode-map (kbd "C-M-q")
+                                nil))))
 
        (cond
         ;; Set up recipes to support development against older
