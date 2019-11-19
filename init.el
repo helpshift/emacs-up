@@ -209,6 +209,7 @@ Also contains along with versions and other config.")
 (save-place-mode)
 (require 'savehist)
 (savehist-mode 1)
+(require 'desktop)
 
 ;; Recentf settings
 ;; Use recentf via helm, invoke it with <C-x c C-c f>
@@ -222,6 +223,7 @@ Also contains along with versions and other config.")
       save-place-file (concat tempfiles-dirname "places")
       backup-directory-alist `(("." . ,(concat tempfiles-dirname "backups")))
       savehist-file (concat tempfiles-dirname "history"))
+(add-to-list 'desktop-path tempfiles-dirname)
 
 (setq visible-bell nil)
 
