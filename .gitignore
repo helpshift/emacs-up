@@ -5,3 +5,5 @@ el-get/
 backups/
 projectile-bookmarks.eld
 projectile.cache
+transient/
+.git-fetch
