@@ -120,12 +120,17 @@ cider."
 (defvar hs--latest-stable-clojure-env
   '(;; Clojure Interactive Development Environment that Rocks
     (:name cider
-           :checkout "v0.22.0"
+           :checkout "v0.23.0"
            :after (progn (load-cider-config)))
     ;; A collection of simple clojure refactoring functions
     (:name clj-refactor
            :checkout "2.4.0"
-           :after (progn (load-clj-refactor-config))))
+           :after (progn (load-clj-refactor-config)))
+    ;; On the fly syntax checking for Clojure, via clj-kondo. You
+    ;; need to install clj-kondo by following installation
+    ;; instructions at
+    ;; https://github.com/borkdude/clj-kondo/blob/master/doc/install.md
+    (:name flycheck-clj-kondo))
   "Return a list of stable `el-get-sources' for development against the latest Clojure.")
 
 (defvar hs--common-env

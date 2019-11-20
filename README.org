@@ -1,56 +1,83 @@
 * Introduction
-  ~emacs-up~ is a bare-bones, quick-start Emacs configuration. It is
-  meant to get newcomers started and productive with Emacs and
-  contains the minimal configuration required to satisfy employee asks
-  inside Helpshift. ~emacs-up~ is currently configured for Clojure
-  programming only, but I'm hoping that it will soon be expanded to
-  include other programming languages used within Helpshift.
+~emacs-up~ is a bare-bones, quick-start Emacs configuration. It is
+meant to get newcomers started and productive with Emacs and contains
+the minimal configuration required to satisfy employee asks inside
+Helpshift. ~emacs-up~ is currently configured for Clojure programming
+only, but I'm hoping that it will soon be expanded to include other
+programming languages used within Helpshift.
 
 * Installation
-  - The minimum supported Emacs version for this configuration is
-    Emacs 25. You can install the latest Emacs through Homebrew as
-    follows:
-    #+begin_example
-      $ brew cask install emacs
-    #+end_example
-  - Out of the box, ~emacs-up~ supports development on Clojure
-    versions ~1.8~ and Java ~8~ (and above). If you are someone who
-    has to program against Clojure ~1.7~ , ~1.6~ or older versions,
-    refer to the section below this one on instructions to do that.
-  - Clone ~emacs-up~ to your machine as your ~.emacs.d~ folder.
-    #+begin_example
-      $ git clone https://github.com/helpshift/emacs-up.git ~/.emacs.d
-    #+end_example
-  - Create a ~.lein/profiles.clj~ file in your home directory. *Note*:
-    You need a minimum lein version of ~2.8.3~. I recommend installing
-    the latest current lein (~2.9.1~ as of this point in time)
-    + The contents of the file should be as follows:
-      #+begin_src clojure
-        {:user {:plugins [[cider/cider-nrepl "0.22.3"]
-                          [refactor-nrepl "2.4.0"]]}}
-      #+end_src
-    + You don't need the cider-nrepl or refactor-nrepl plugin section
-      if you use ~cider-jack-in~ to start your REPL and connect to it.
-      We don't use ~cider-jack-in~ at Helpshift, for reasons outside
-      the scope of this document.
-    + Changes will not apply to REPLs that are already running. After
-      creating the ~profiles.clj~ file, you need to stop and restart
-      running REPLs.
-  - Fire up Emacs and wait for it to download packages (This is a
-    one-time thing).
-  - The ~helm-ag~ package in this config depends on Ag - The Silver
+- The minimum supported Emacs version for this configuration is
+  Emacs 25. You can install the latest Emacs through Homebrew as
+  follows:
+  #+begin_example
+    $ brew cask install emacs
+  #+end_example
+- Out of the box, ~emacs-up~ supports development on Clojure versions
+  ~1.8~ and Java ~8~ (and above). If you are someone who has to
+  program against Clojure ~1.7~ , ~1.6~ or older versions, refer to
+  the section below this one on instructions to do that.
+- Clone ~emacs-up~ to your machine as your ~.emacs.d~ folder.
+  #+begin_example
+    $ git clone https://github.com/helpshift/emacs-up.git ~/.emacs.d
+  #+end_example
+- Create a ~.lein/profiles.clj~ file in your home directory. *Note*:
+  You need a minimum lein version of ~2.8.3~. I recommend installing
+  the latest current lein (~2.9.1~ as of this point in time)
+  + The contents of the file should be as follows:
+    #+begin_src clojure
+      {:user {:plugins [[cider/cider-nrepl "0.22.4"]
+                        [refactor-nrepl "2.4.0"]]}}
+    #+end_src
+  + You don't need the cider-nrepl or refactor-nrepl plugin section if
+    you use ~cider-jack-in~ to start your REPL and connect to it.  We
+    don't use ~cider-jack-in~ at Helpshift, for reasons outside the
+    scope of this document.
+  + Changes will not apply to REPLs that are already running. After
+    creating the ~profiles.clj~ file, you need to stop and restart
+    running REPLs.
+- Fire up Emacs and wait for it to download packages (This is a
+  one-time thing).
+- Review the next section in this README. It has details of external
+  tools and dependencies that you need to install for working with
+  certain packages. Install these dependencies. (Look for the *Needs
+  Install* note)
+- (For beginners) Go through the tutorial in the ~docs/~ folder to get
+  started.
+
+* Packages that Emacs-Up configures out-of-the-box
+- ~avy~: Jump to things in Emacs tree-style.
+- ~cider~: Clojure IDE and REPL. This package is pinned to a stable
+  version.
+- ~clj-refactor~: A collection of commands for refactoring Clojure
+  code. This package is pinned to a stable version.
+- ~company-mode~: Modular in-buffer completion framework for Emacs.
+- ~dumb-jump~: an Emacs jump to definition package for 40+ languages.
+- ~flycheck~: On-the-fly syntax checking extension
+- ~flycheck-clj-kondo~: Emacs Integration with ~clj-kondo~, a linter
+  for Clojure code providing on-the-fly syntax checking.
+  + *Note: Needs Install*: This package needs ~clj-kondo~ to provide
+    linting information for Clojure files. Install ~clj-kondo~ by
+    following installation instructions at
+    https://github.com/borkdude/clj-kondo/blob/master/doc/install.md
+- ~helm~: Emacs incremental completion and narrowing framework.
+- ~helm-ag~: The silver search with helm interface.
+  + *Note: Needs Install*: This package depends on Ag - The Silver
     Searcher. Installing Ag will allow you to levarage super fast
     searches on files and data from within Emacs. Installing this is
     optional, not installing it will mean that only ~helm-ag~ will
     cease to work. You can find instructions to install Ag here:
-    https://github.com/ggreer/the_silver_searcher. Install it from
-    Homebrew with:
-    #+begin_example
-      $ brew install the_silver_searcher
-    #+end_example
-  - (For beginners) Go through the tutorial in the ~docs/~ folder to
-    get started.
-
+    https://github.com/ggreer/the_silver_searcher.
+- ~helm-cider~: ~helm~ integration for ~cider~.
+- ~helm-projectile~: ~helm~ integration for ~projectile~.
+- ~ido~: Interactively do things with buffers and files
+- ~ido-completing-read-plus~: Fancy completion all over Emacs, not
+  just for buffers and files.
+- ~magit~: An Emacs mode for Git.
+- ~paredit~: Minor mode for editing parentheses.
+- ~projectile~: Project navigation and management library for Emacs.
+- ~smex~: M-x interface with Ido-style fuzzy matching.
+- ~yasnippet~: a template system for Emacs.
 * Developing against Clojure 1.7
   If you are developing against Clojure 1.7, you need to install older
   packages of CIDER, Clj-Refactor and Clojure mode. Don't worry, I
@@ -94,7 +121,7 @@
     (This is a one-time thing).
 
 * Updating Emacs Up
-  The current version of ~emacs-up~ is ~v3.2.0~. If you are updating
+  The current version of ~emacs-up~ is ~v3.3.0~. If you are updating
   an existing installation of ~emacs-up~, the ~NEWS.org~ file lists
   major changes and update instructions.
 

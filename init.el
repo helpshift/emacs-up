@@ -11,7 +11,7 @@
 (when (version< emacs-version "25")
   (error "Unsupported Emacs Version! Please upgrade to a newer Emacs.  Emacs installation instructions: https://www.gnu.org/software/emacs/download.html"))
 
-(defvar emacs-up--version "v3.2.0"
+(defvar emacs-up--version "v3.3.0"
   "The current version of the Emacs Up Starter Kit.")
 
 (defun emacs-up-version ()
@@ -169,7 +169,38 @@ Also contains along with versions and other config.")
          (:name ido-completing-read-plus)
 
          ;; A low contrast color theme for Emacs.
-         (:name color-theme-zenburn))
+         (:name color-theme-zenburn)
+
+         ;; A collection of snippets for repetitive stuff
+         (:name yasnippet
+                :after (progn (yas-global-mode 1)
+                              (add-to-list 'hippie-expand-try-functions-list
+                                           'yas-hippie-try-expand)))
+         (:name yasnippet-snippets)
+
+         ;; an Emacs jump to definition package for 40+ languages
+         (:name dumb-jump
+                :after (progn (dumb-jump-mode)
+                              (define-key dumb-jump-mode-map (kbd "C-c d g")
+                                'dumb-jump-go)
+                              (define-key dumb-jump-mode-map (kbd "C-c d b")
+                                'dumb-jump-back)
+                              (define-key dumb-jump-mode-map (kbd "C-c d q")
+                                'dumb-jump-quick-look)
+                              ;; Don't mess with the default
+                              ;; indentation keybinding
+                              (define-key dumb-jump-mode-map (kbd "C-M-q")
+                                nil)))
+
+         ;; On-the-fly syntax checking
+         (:name flycheck
+                :after (progn (setq flycheck-global-modes '(not org-mode))
+                              (global-flycheck-mode)))
+
+         ;; M-x interface with Ido-style fuzzy matching.
+         (:name smex
+                :after (progn (smex-initialize)
+                              (global-set-key (kbd "M-x") 'smex))))
 
        (cond
         ;; Set up recipes to support development against older
@@ -195,43 +226,43 @@ Also contains along with versions and other config.")
 ;; Modify the CMD key to be my Meta key
 (setq mac-command-modifier 'meta)
 
-(require 'ido)
-(require 'recentf)
-(recentf-mode 1)
-(require 'saveplace)
-(save-place-mode)
-(require 'savehist)
-(savehist-mode 1)
-
-;; Recentf settings
+;;; Recentf settings
 ;; Use recentf via helm, invoke it with <C-x c C-c f>
+(require 'recentf)
 (setq recentf-exclude (list (concat tempfiles-dirname "*"))
       recentf-save-file (concat tempfiles-dirname "recentf")
       recentf-max-saved-items 1000
       recentf-max-menu-items 1000)
-
-;; Move Emacs state into the temp folder we've created.
-(setq ido-save-directory-list-file (concat tempfiles-dirname "ido.last")
-      save-place-file (concat tempfiles-dirname "places")
-      backup-directory-alist `(("." . ,(concat tempfiles-dirname "backups")))
-      savehist-file (concat tempfiles-dirname "history"))
-
-(setq visible-bell nil)
+(recentf-mode)
 
 ;;; Interactively Do Things
-;; basic ido settings
+;; Ido settings
+(require 'ido)
+(setq ido-enable-flex-matching t
+      ido-use-virtual-buffers t
+      ido-create-new-buffer 'always
+      ido-save-directory-list-file (concat tempfiles-dirname "ido.last"))
 (ido-mode t)
 (ido-everywhere)
 (require 'ido-completing-read+)
 (ido-ubiquitous-mode 1)
-
-(setq ido-enable-flex-matching t
-      ido-use-virtual-buffers t
-      ido-create-new-buffer 'always)
 (add-hook 'ido-make-buffer-list-hook 'ido-summary-buffers-to-end)
 
+;;; Saveplace Settings
+(require 'saveplace)
+(setq save-place-file (concat tempfiles-dirname "places"))
+(save-place-mode)
 
-;;; Theme and Look
+;;; Desktop Settings
+(require 'desktop)
+(add-to-list 'desktop-path tempfiles-dirname)
+
+;; Move Emacs state into the temp folder we've created.
+(setq  backup-directory-alist `(("." . ,(concat tempfiles-dirname "backups"))))
+;; Turn off the anoying bell sound
+(setq visible-bell t)
+
+;; Theme and Look
 ;; This should load after `custom-safe-themes' to avoid Emacs
 ;; panicking about whether it is safe or not.
 (load-theme 'zenburn t)

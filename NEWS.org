@@ -1,100 +1,119 @@
-* v3.2.0
-  This is not a breaking change. However, the easiest way to upgrade
-  safely is still to *delete your original installation* and clone
-  this repository from scratch. This will also get the latest versions
-  of dependent libraries (like ~clojure-mode~) (which is a good thing)
+* v3.3.0
+<2019-11-20 Wed>
+This is not a breaking change. However, the easiest way to upgrade
+safely is still to *delete your original installation* and clone this
+repository from scratch. This will also get the latest versions of
+dependent libraries (like ~clojure-mode~) (which is a good thing)
 ** Changes
-   - Update ~cider~ to the latest version (v0.22.0 - Sao Paulo)
-   - Update ~cider-nrepl~ to the latest version (v0.22.3)
-   - Update Emacs Installation instructions
-     + Use ~brew cask~
-   - Add information about minimum lein version (v2.8.3)
-   - Let =M-s= remain bound under paredit.
+- Install ~yasnippet~, ~dumb-jump~, ~smex~ and ~flycheck-clj-kondo~.
+- Update ~cider~ to the latest version (v0.23.0 - Lima)
+- Update ~cider-nrepl~ to the latest version (v0.22.4)
+- Fix configuration of ~ido~ and ~recentf~
+
+* v3.2.0
+<2019-09-17 Tue>
+This is not a breaking change. However, the easiest way to upgrade
+safely is still to *delete your original installation* and clone this
+repository from scratch. This will also get the latest versions of
+dependent libraries (like ~clojure-mode~) (which is a good thing)
+** Changes
+- Update ~cider~ to the latest version (v0.22.0 - Sao Paulo)
+- Update ~cider-nrepl~ to the latest version (v0.22.3)
+- Update Emacs Installation instructions
+  + Use ~brew cask~
+- Add information about minimum lein version (v2.8.3)
+- Let =M-s= remain bound under paredit.
 
 * v3.1.0
-  This is not a breaking change. However, the easiest way to upgrade
-  safely is still to *delete your original installation* and clone
-  this repository from scratch. This will also get the latest versions
-  of dependent libraries (like ~clojure-mode~) (which is a good thing)
+<2019-01-15 Tue>
+This is not a breaking change. However, the easiest way to upgrade
+safely is still to *delete your original installation* and clone this
+repository from scratch. This will also get the latest versions of
+dependent libraries (like ~clojure-mode~) (which is a good thing)
 ** Changes
-   - Update ~cider~ to the latest version (v0.20.0 - Oslo)
+- Update ~cider~ to the latest version (v0.20.0 - Oslo)
 
 * v3.0.0
-  This is a *Breaking Change* (via version conflict) upgrade. I've
-  upgraded the version of one of the packages that ~emacs-up~ depends
-  upon, and upgrading your local setup may not be as straight-forward
-  as updating the repo from upstream.
+<2019-01-06 Sun>
+This is a *Breaking Change* (via version conflict) upgrade. I've
+upgraded the version of one of the packages that ~emacs-up~ depends
+upon, and upgrading your local setup may not be as straight-forward
+as updating the repo from upstream.
 
-  The easiest way to upgrade reliably is to *delete your original
-  installation* and clone this repository from scratch.
+The easiest way to upgrade reliably is to *delete your original
+installation* and clone this repository from scratch.
 
-  Restart Emacs.
+Restart Emacs.
 ** Changes:
-   - Update ~cider~ to the latest version (v0.19.0 - Raleigh)
-   - Update ~clj-refactor~ to the latest version (v2.4.0)
-   - Remove dead-code of previous ~cider~ versions
-   - Replace ~ido-ubiquitous~ with ~ido-completing-read+~
-   - Add a prefix for ~helm-projectile~ : ~C-x c p~. Move
-     ~helm-list-emacs-process~ to ~C-x c P~.
-   - Add instructions for supporting Dev against Clojure 1.7 (Cider
-     17).
+- Update ~cider~ to the latest version (v0.19.0 - Raleigh)
+- Update ~clj-refactor~ to the latest version (v2.4.0)
+- Remove dead-code of previous ~cider~ versions
+- Replace ~ido-ubiquitous~ with ~ido-completing-read+~
+- Add a prefix for ~helm-projectile~ : ~C-x c p~. Move
+  ~helm-list-emacs-process~ to ~C-x c P~.
+- Add instructions for supporting Dev against Clojure 1.7 (Cider
+  17).
 
 * v2.0.1
-  This is a minor, safe upgrade.
+<2017-01-02 Mon>
+This is a minor, safe upgrade.
 ** Changes:
-   - Change the key-bindings for using ~helm-ag~. Replace ~M-g~ with
-     ~g~ in the prefix key.
-   - Add the ~ido-ubiquitous~ library for Ido completions everywhere.
+- Change the key-bindings for using ~helm-ag~. Replace ~M-g~ with
+  ~g~ in the prefix key.
+- Add the ~ido-ubiquitous~ library for Ido completions everywhere.
 
 * v2.0.0
-  This is a *Breaking Change* (via version conflict) upgrade. I've
-  upgraded the version of one of the packages that ~emacs-up~ depends
-  upon, and upgrading your local setup may not be as straight-forward
-  as updating the repo from upstream.
+<2016-11-06 Sun>
+This is a *Breaking Change* (via version conflict) upgrade. I've
+upgraded the version of one of the packages that ~emacs-up~ depends
+upon, and upgrading your local setup may not be as straight-forward as
+updating the repo from upstream.
 
-  The easiest way to upgrade reliably is to *delete your original
-  installation* and clone this repository from scratch. If you don't
-  want to do that, first fetch the latest changes locally and run the
-  following commands:
-  #+begin_example
-    ;; updates el-get to the latest version and brings in new recipies.
-    M-x el-get-self-update RET
-    ;; delete ~cider~, we've moved to the latest version.
-    M-x el-get-remove RET cider RET
-  #+end_example
-  Restart Emacs.
+The easiest way to upgrade reliably is to *delete your original
+installation* and clone this repository from scratch. If you don't
+want to do that, first fetch the latest changes locally and run the
+following commands:
+#+begin_example
+  ;; updates el-get to the latest version and brings in new recipies.
+  M-x el-get-self-update RET
+  ;; delete ~cider~, we've moved to the latest version.
+  M-x el-get-remove RET cider RET
+#+end_example
+Restart Emacs.
 ** Changes:
-   - Update ~cider~ to the latest version (v0.14.0 - Berlin)
-   - Add ~helm-cider~ to bring ~cider-apropos~ into the goodness of
-     Helm.
-   - Add ~helm-ag~ because people want to use the Silver Searcher for
-     faster searches.
-   - Add ~helm-projectile~ to quickly perform project related
-     functions.
+- Update ~cider~ to the latest version (v0.14.0 - Berlin)
+- Add ~helm-cider~ to bring ~cider-apropos~ into the goodness of
+  Helm.
+- Add ~helm-ag~ because people want to use the Silver Searcher for
+  faster searches.
+- Add ~helm-projectile~ to quickly perform project related
+  functions.
 
 * v1.0.0
-  This is a *Breaking Change* upgrade. To upgrade your ~emacs-up~,
-  *delete your original installation* and clone this repository from
-  scratch. Follow the updated setup instructions in the ~README.org~
-  file.
+<2016-10-09 Sun>
+This is a *Breaking Change* upgrade. To upgrade your ~emacs-up~,
+*delete your original installation* and clone this repository from
+scratch. Follow the updated setup instructions in the ~README.org~
+file.
 ** Changes:
-   I've made the following major changes:
-   - Move to ~el-get~ as the package management system.
-   - Enable development against Clojure versions 1.6 and below (Find
-     instructions in the ~README.org~ file).
-   - Make Emacs 25 the minimum supported Emacs version.
+I've made the following major changes:
+- Move to ~el-get~ as the package management system.
+- Enable development against Clojure versions 1.6 and below (Find
+  instructions in the ~README.org~ file).
+- Make Emacs 25 the minimum supported Emacs version.
 
 * v0.1.0
-  This initial version of ~emacs-up~ is built around ~package.el~
-  which is the default package management system for Emacs.
+<2016-09-21 Wed>
+This initial version of ~emacs-up~ is built around ~package.el~ which
+is the default package management system for Emacs.
 
-  However, a number of people within Helpshift are working on projects
-  which need to support Clojure versions below 1.7 (eg: projects which
-  depend on the Storm framework). Versions of CIDER - The Clojure
-  Interactive Development Environment that Rocks - which are available
-  in public package repositories do not support these older Clojure
-  versions.
+However, a number of people within Helpshift are working on projects
+which need to support Clojure versions below 1.7 (eg: projects which
+depend on the Storm framework). Versions of CIDER - The Clojure
+Interactive Development Environment that Rocks - which are available
+in public package repositories do not support these older Clojure
+versions.
 
-  Future development of ~emacs-up~ will move to ~el-get~, which allows
-  the developers to pin the version of the emacs package that they
-  want to install.
+Future development of ~emacs-up~ will move to ~el-get~, which allows
+the developers to pin the version of the emacs package that they want
+to install.
