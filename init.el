@@ -190,7 +190,12 @@ Also contains along with versions and other config.")
                               ;; Don't mess with the default
                               ;; indentation keybinding
                               (define-key dumb-jump-mode-map (kbd "C-M-q")
-                                nil))))
+                                nil)))
+
+         ;; On-the-fly syntax checking
+         (:name flycheck
+                :after (progn (setq flycheck-global-modes '(not org-mode))
+                              (global-flycheck-mode))))
 
        (cond
         ;; Set up recipes to support development against older
