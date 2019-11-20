@@ -195,7 +195,12 @@ Also contains along with versions and other config.")
          ;; On-the-fly syntax checking
          (:name flycheck
                 :after (progn (setq flycheck-global-modes '(not org-mode))
-                              (global-flycheck-mode))))
+                              (global-flycheck-mode)))
+
+         ;; M-x interface with Ido-style fuzzy matching.
+         (:name smex
+                :after (progn (smex-initialize)
+                              (global-set-key (kbd "M-x") 'smex))))
 
        (cond
         ;; Set up recipes to support development against older
