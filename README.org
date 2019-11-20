@@ -121,7 +121,7 @@ programming languages used within Helpshift.
     (This is a one-time thing).
 
 * Updating Emacs Up
-  The current version of ~emacs-up~ is ~v3.2.0~. If you are updating
+  The current version of ~emacs-up~ is ~v3.3.0~. If you are updating
   an existing installation of ~emacs-up~, the ~NEWS.org~ file lists
   major changes and update instructions.
 

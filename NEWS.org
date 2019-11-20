@@ -1,4 +1,17 @@
+* v3.3.0
+<2019-11-20 Wed>
+This is not a breaking change. However, the easiest way to upgrade
+safely is still to *delete your original installation* and clone this
+repository from scratch. This will also get the latest versions of
+dependent libraries (like ~clojure-mode~) (which is a good thing)
+** Changes
+- Install ~yasnippet~, ~dumb-jump~, ~smex~ and ~flycheck-clj-kondo~.
+- Update ~cider~ to the latest version (v0.23.0 - Lima)
+- Update ~cider-nrepl~ to the latest version (v0.22.4)
+- Fix configuration of ~ido~ and ~recentf~
+
 * v3.2.0
+<2019-09-17 Tue>
 This is not a breaking change. However, the easiest way to upgrade
 safely is still to *delete your original installation* and clone this
 repository from scratch. This will also get the latest versions of
