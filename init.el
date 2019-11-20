@@ -244,7 +244,7 @@ Also contains along with versions and other config.")
       savehist-file (concat tempfiles-dirname "history"))
 (add-to-list 'desktop-path tempfiles-dirname)
 
-(setq visible-bell nil)
+(setq visible-bell t)
 
 ;;; Interactively Do Things
 ;; basic ido settings
