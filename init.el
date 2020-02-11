@@ -200,7 +200,19 @@ Also contains along with versions and other config.")
          ;; M-x interface with Ido-style fuzzy matching.
          (:name smex
                 :after (progn (smex-initialize)
-                              (global-set-key (kbd "M-x") 'smex))))
+                              (global-set-key (kbd "M-x") 'smex)))
+
+         ;; Major mode for JSX and JS files
+         (:name rjsx-mode
+                :after (progn (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+                              (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))
+                              (setq js2-basic-offset 2
+                                    js-switch-indent-offset 2)))
+
+         ;; Format JS, JSX files on save event.
+         ;; Prerequisite: npm install -g prettier`
+         (:name prettier-js
+                :after (add-hook 'rjsx-mode-hook 'Prettier-Js-mode)))
 
        (cond
         ;; Set up recipes to support development against older

@@ -2,8 +2,8 @@
 ~emacs-up~ is a bare-bones, quick-start Emacs configuration. It is
 meant to get newcomers started and productive with Emacs and contains
 the minimal configuration required to satisfy employee asks inside
-Helpshift. ~emacs-up~ is currently configured for Clojure programming
-only, but I'm hoping that it will soon be expanded to include other
+Helpshift. ~emacs-up~ is currently configured for Clojure & Frontend
+programming only, but I'm hoping that it will soon be expanded to include other
 programming languages used within Helpshift.
 
 * Installation
@@ -36,6 +36,7 @@ programming languages used within Helpshift.
   + Changes will not apply to REPLs that are already running. After
     creating the ~profiles.clj~ file, you need to stop and restart
     running REPLs.
+- For Javascript auto formatting, do, ~npm install -g prettier~.
 - Fire up Emacs and wait for it to download packages (This is a
   one-time thing).
 - Review the next section in this README. It has details of external
@@ -78,6 +79,9 @@ programming languages used within Helpshift.
 - ~projectile~: Project navigation and management library for Emacs.
 - ~smex~: M-x interface with Ido-style fuzzy matching.
 - ~yasnippet~: a template system for Emacs.
+- ~rjsx-mode~: Major mode for JSX and JS files
+- ~prettier-js~: Auto formatting for JSX and JS files
+
 * Developing against Clojure 1.7
   If you are developing against Clojure 1.7, you need to install older
   packages of CIDER, Clj-Refactor and Clojure mode. Don't worry, I
