@@ -23,11 +23,11 @@ programming languages used within Helpshift.
   #+end_example
 - Create a ~.lein/profiles.clj~ file in your home directory. *Note*:
   You need a minimum lein version of ~2.8.3~. I recommend installing
-  the latest current lein (~2.9.1~ as of this point in time)
+  the latest current lein (~2.9.3~ as of this point in time)
   + The contents of the file should be as follows:
     #+begin_src clojure
-      {:user {:plugins [[cider/cider-nrepl "0.22.4"]
-                        [refactor-nrepl "2.4.0"]]}}
+      {:user {:plugins [[cider/cider-nrepl "0.25.2"]
+                        [refactor-nrepl "2.5.0"]]}}
     #+end_src
   + You don't need the cider-nrepl or refactor-nrepl plugin section if
     you use ~cider-jack-in~ to start your REPL and connect to it.  We
@@ -131,7 +131,7 @@ programming languages used within Helpshift.
     (This is a one-time thing).
 
 * Updating Emacs Up
-  The current version of ~emacs-up~ is ~v3.3.0~. If you are updating
+  The current version of ~emacs-up~ is ~v3.4.0~. If you are updating
   an existing installation of ~emacs-up~, the ~NEWS.org~ file lists
   major changes and update instructions.
 

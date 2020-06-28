@@ -1,3 +1,18 @@
+* v3.4.0
+<2020-06-28 Sun>
+This is not a breaking change. However, the easiest way to upgrade
+safely is still to *delete your original installation* and clone this
+repository from scratch. This will also get the latest versions of
+dependent libraries (like ~clojure-mode~) (which is a good thing)
+** Changes
+- Add support for Frontend Development at Helpshift! (Thanks to
+  @aniket19)
+  + Install ~rjsx-mode~ and ~prettier-js~ for working with JS and JSX
+    files.
+- Install ~cljstyle-mode~ and ~cljstyle~ for auto-formatting.
+- Update ~cider~ to the latest version (v0.25 - Bergamo)
+- Update ~cider-nrepl~ to the latest version (v0.25.2)
+
 * v3.3.0
 <2019-11-20 Wed>
 This is not a breaking change. However, the easiest way to upgrade
