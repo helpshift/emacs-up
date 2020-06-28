@@ -47,17 +47,11 @@ cider."
 (defun load-cider-config ()
   "Configuration for CIDER."
   (eval-after-load 'clojure-mode
-    '(progn (add-hook 'clojure-mode-hook
-                      'enable-paredit-mode)))
+    '(progn (add-hook 'clojure-mode-hook 'enable-paredit-mode)))
   (eval-after-load 'cider-repl
-    '(progn (add-hook 'cider-repl-mode-hook
-                      'enable-paredit-mode)
-            (define-key cider-repl-mode-map
-              (kbd "C-M-q")
-              'prog-indent-sexp)
-            (define-key cider-repl-mode-map
-              (kbd "C-c M-o")
-              'cider-repl-clear-buffer)))
+    '(progn (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
+            (define-key cider-repl-mode-map (kbd "C-M-q") 'prog-indent-sexp)
+            (define-key cider-repl-mode-map (kbd "C-c M-o") 'cider-repl-clear-buffer)))
   (eval-after-load 'cider-mode
     '(progn
        (setq cider-repl-history-file
@@ -78,11 +72,12 @@ cider."
        (add-hook 'cider-mode-hook 'eldoc-mode))))
 
 (defun turn-on-clj-refactor ()
-  (clj-refactor-mode 1)
+  "Helper function to add as a hook to `clojure-mode'."
+  (clj-refactor-mode +1)
   (cljr-add-keybindings-with-prefix "C-c m"))
 
 (defun load-clj-refactor-config ()
-  "Configuration for clj-refactor."
+  "Configuration for `clj-refactor-mode'."
   (setq cljr-favor-prefix-notation nil
         cljr-eagerly-build-asts-on-startup t
         cljr-warn-on-eval nil
@@ -92,8 +87,7 @@ cider."
 
   (eval-after-load 'clojure-mode
     '(progn
-       (add-hook 'clojure-mode-hook
-                 'turn-on-clj-refactor))))
+       (add-hook 'clojure-mode-hook 'turn-on-clj-refactor))))
 
 (defvar hs--clojure16-env
   '((:name clojure-mode
@@ -148,7 +142,9 @@ cider."
                                    (define-key cider-mode-map (kbd "C-x c d n") 'cider-browse-ns)
                                    (define-key cider-mode-map (kbd "C-x c d a") 'cider-apropos)
                                    (define-key cider-mode-map (kbd "C-x c d e") 'cider-apropos-documentation))))))
-  "Return a list of stable `el-get-sources' for development against Clojure (both latest as well as older versions of Clojure)")
+  "Return a list of stable `el-get-sources' for development against Clojure.
+
+Handles both latest as well as older versions of Clojure.")
 
 (defun hs-clojure16-env ()
   "Return a list of `el-get-sources' for development against Clojure 1.6 or less."
