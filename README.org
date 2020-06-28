@@ -61,6 +61,12 @@ programming languages used within Helpshift.
     linting information for Clojure files. Install ~clj-kondo~ by
     following installation instructions at
     https://github.com/borkdude/clj-kondo/blob/master/doc/install.md
+- ~cljstyle-mode~: Emacs Integration with ~cljstyle~, an automatic
+  formatting tool which ensures that Clojure code is well-formatted.
+  + *Note: Needs Install*: This package needs ~cljstyle~ to format
+    your Clojure files when you save the buffer. Install ~cljstyle~ by
+    following installation instructions at
+    https://github.com/greglook/cljstyle#installation
 - ~helm~: Emacs incremental completion and narrowing framework.
 - ~helm-ag~: The silver search with helm interface.
   + *Note: Needs Install*: This package depends on Ag - The Silver

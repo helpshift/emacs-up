@@ -76,6 +76,12 @@ cider."
   (clj-refactor-mode +1)
   (cljr-add-keybindings-with-prefix "C-c m"))
 
+(defun turn-on-cljstyle ()
+  "Utility function to turn on `cljstyle-mode' and auto-formatting."
+  (if (executable-find "cljstyle")
+      (cljstyle-mode +1)
+    (message "Could not find `cljstyle' on $PATH. Please ensure you have installed it correctly.")))
+
 (defun load-clj-refactor-config ()
   "Configuration for `clj-refactor-mode'."
   (setq cljr-favor-prefix-notation nil
@@ -124,7 +130,11 @@ cider."
     ;; need to install clj-kondo by following installation
     ;; instructions at
     ;; https://github.com/borkdude/clj-kondo/blob/master/doc/install.md
-    (:name flycheck-clj-kondo))
+    (:name flycheck-clj-kondo)
+    ;; Add formatting via `cljstyle' as a minor-mode, so that Clojure
+    ;; files are always well-formatted.
+    (:name cljstyle
+           :after (progn (add-hook 'clojure-mode-hook 'turn-on-cljstyle))))
   "Return a list of stable `el-get-sources' for development against the latest Clojure.")
 
 (defvar hs--common-env
