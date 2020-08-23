@@ -1,3 +1,19 @@
+* v3.4.1
+<2020-08-23 Sun>
+This is not a breaking change. It is a bug-fix change. However, the
+easiest way to upgrade safely is still to *delete your original
+installation* and clone this repository from scratch. This will also
+get the latest versions of dependent libraries (like ~clojure-mode~)
+(which is a good thing)
+** Changes
+- Update the Cider suite of libraries to the latest version
+  + ~cider~: v0.26.1
+  + ~cider-nrepl~: 0.25.3
+  + ~clj-refactor~: v2.5.0
+  + ~refactor-nrepl~: 2.5.0
+- Stop cljstyle from auto-loading on Clojure files. This breaks marks
+  inside the file, breaking navigation badly.
+
 * v3.4.0
 <2020-06-28 Sun>
 This is not a breaking change. However, the easiest way to upgrade
