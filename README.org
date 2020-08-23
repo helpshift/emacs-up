@@ -23,10 +23,10 @@ programming languages used within Helpshift.
   #+end_example
 - Create a ~.lein/profiles.clj~ file in your home directory. *Note*:
   You need a minimum lein version of ~2.8.3~. I recommend installing
-  the latest current lein (~2.9.3~ as of this point in time)
+  the latest current lein (~2.9.4~ as of this point in time)
   + The contents of the file should be as follows:
     #+begin_src clojure
-      {:user {:plugins [[cider/cider-nrepl "0.25.2"]
+      {:user {:plugins [[cider/cider-nrepl "0.25.3"]
                         [refactor-nrepl "2.5.0"]]}}
     #+end_src
   + You don't need the cider-nrepl or refactor-nrepl plugin section if
