@@ -132,9 +132,12 @@ cider."
     ;; https://github.com/borkdude/clj-kondo/blob/master/doc/install.md
     (:name flycheck-clj-kondo)
     ;; Add formatting via `cljstyle' as a minor-mode, so that Clojure
-    ;; files are always well-formatted.
+    ;; files are always well-formatted. Note: Turning cljstyle on by
+    ;; default is disabled, because it breaks marks and jumping. I
+    ;; will remove it / fix it in a future version.
     (:name cljstyle
-           :after (progn (add-hook 'clojure-mode-hook 'turn-on-cljstyle))))
+           ;; :after (progn (add-hook 'clojure-mode-hook 'turn-on-cljstyle))
+           ))
   "Return a list of stable `el-get-sources' for development against the latest Clojure.")
 
 (defvar hs--common-env
