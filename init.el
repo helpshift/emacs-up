@@ -91,18 +91,21 @@ Also contains along with versions and other config.")
          '((:name exec-path-from-shell
                   :after (progn (exec-path-from-shell-initialize)))))
 
-       '( ;; Fixing weird quirks and poor defaults
+       '(;; Jump to things in Emacs tree-style.
+         (:name avy
+                :after (progn (global-set-key (kbd "M-g g") 'avy-goto-line)
+                              (global-set-key (kbd "M-g SPC") 'avy-goto-word-1)
+                              (avy-setup-default)))
+
+         ;; Fixing weird quirks and poor defaults
          (:name better-defaults)
          (:name plantuml-mode
                 :after (progn (setq plantuml-default-exec-mode 'jar)
                               (add-to-list 'auto-mode-alist
                                            '("\\.puml$" . plantuml-mode))))
 
-         ;; Major mode for plantUML
-         (:name plantuml-mode
-                :after (progn (setq plantuml-default-exec-mode 'jar)
-                              (add-to-list 'auto-mode-alist
-                                           '("\\.puml$" . plantuml-mode))))
+         ;; A low contrast color theme for Emacs.
+         (:name color-theme-zenburn)
 
          ;; Modular in-buffer completion framework for Emacs
          (:name company-mode
@@ -113,6 +116,25 @@ Also contains along with versions and other config.")
                                 [tab] 'company-complete)
                               (define-key company-active-map
                                 (kbd "TAB") 'company-complete)))
+
+         ;; an Emacs jump to definition package for 40+ languages
+         (:name dumb-jump
+                :after (progn (dumb-jump-mode)
+                              (define-key dumb-jump-mode-map (kbd "C-c d g")
+                                'dumb-jump-go)
+                              (define-key dumb-jump-mode-map (kbd "C-c d b")
+                                'dumb-jump-back)
+                              (define-key dumb-jump-mode-map (kbd "C-c d q")
+                                'dumb-jump-quick-look)
+                              ;; Don't mess with the default
+                              ;; indentation keybinding
+                              (define-key dumb-jump-mode-map (kbd "C-M-q")
+                                nil)))
+
+         ;; On-the-fly syntax checking
+         (:name flycheck
+                :after (progn (setq flycheck-global-modes '(not org-mode))
+                              (global-flycheck-mode)))
 
          ;; Emacs incremental completion and narrowing framework
          (:name helm
@@ -155,11 +177,14 @@ Also contains along with versions and other config.")
                               (global-set-key (kbd "C-x c P") 'helm-list-emacs-process)
                               (helm-projectile-on)))
 
-         ;; Jump to things in Emacs tree-style.
-         (:name avy
-                :after (progn (global-set-key (kbd "M-g g") 'avy-goto-line)
-                              (global-set-key (kbd "M-g SPC") 'avy-goto-word-1)
-                              (avy-setup-default)))
+         ;; Use ido (nearly) everywhere
+         ;; settings for this package are loaded below in the ido section.
+         (:name ido-completing-read-plus)
+
+         ;; It's Magit! An Emacs mode for Git.
+         (:name magit
+                :after (progn (global-set-key (kbd "C-x g") 'magit-status)
+                              (setq magit-completing-read-function 'magit-ido-completing-read)))
 
          ;; Minor mode for editing parentheses
          (:name paredit
@@ -169,48 +194,16 @@ Also contains along with versions and other config.")
                               (add-hook 'emacs-lisp-mode-hook
                                         'enable-paredit-mode)))
 
-         ;; It's Magit! An Emacs mode for Git.
-         (:name magit
-                :after (progn (global-set-key (kbd "C-x g") 'magit-status)
-                              (setq magit-completing-read-function 'magit-ido-completing-read)))
+         ;; Major mode for plantUML
+         (:name plantuml-mode
+                :after (progn (setq plantuml-default-exec-mode 'jar)
+                              (add-to-list 'auto-mode-alist
+                                           '("\\.puml$" . plantuml-mode))))
 
-         ;; Use ido (nearly) everywhere
-         ;; settings for this package are loaded below in the ido section.
-         (:name ido-completing-read-plus)
-
-         ;; A low contrast color theme for Emacs.
-         (:name color-theme-zenburn)
-
-         ;; A collection of snippets for repetitive stuff
-         (:name yasnippet
-                :after (progn (yas-global-mode 1)
-                              (add-to-list 'hippie-expand-try-functions-list
-                                           'yas-hippie-try-expand)))
-         (:name yasnippet-snippets)
-
-         ;; an Emacs jump to definition package for 40+ languages
-         (:name dumb-jump
-                :after (progn (dumb-jump-mode)
-                              (define-key dumb-jump-mode-map (kbd "C-c d g")
-                                'dumb-jump-go)
-                              (define-key dumb-jump-mode-map (kbd "C-c d b")
-                                'dumb-jump-back)
-                              (define-key dumb-jump-mode-map (kbd "C-c d q")
-                                'dumb-jump-quick-look)
-                              ;; Don't mess with the default
-                              ;; indentation keybinding
-                              (define-key dumb-jump-mode-map (kbd "C-M-q")
-                                nil)))
-
-         ;; On-the-fly syntax checking
-         (:name flycheck
-                :after (progn (setq flycheck-global-modes '(not org-mode))
-                              (global-flycheck-mode)))
-
-         ;; M-x interface with Ido-style fuzzy matching.
-         (:name smex
-                :after (progn (smex-initialize)
-                              (global-set-key (kbd "M-x") 'smex)))
+         ;; Format JS, JSX files on save event.
+         ;; Prerequisite: npm install -g prettier`
+         (:name prettier-js
+                :after (add-hook 'rjsx-mode-hook 'Prettier-Js-mode))
 
          ;; Major mode for JSX and JS files
          (:name rjsx-mode
@@ -219,10 +212,17 @@ Also contains along with versions and other config.")
                               (setq js2-basic-offset 2
                                     js-switch-indent-offset 2)))
 
-         ;; Format JS, JSX files on save event.
-         ;; Prerequisite: npm install -g prettier`
-         (:name prettier-js
-                :after (add-hook 'rjsx-mode-hook 'Prettier-Js-mode)))
+         ;; M-x interface with Ido-style fuzzy matching.
+         (:name smex
+                :after (progn (smex-initialize)
+                              (global-set-key (kbd "M-x") 'smex)))
+
+         ;; A collection of snippets for repetitive stuff
+         (:name yasnippet
+                :after (progn (yas-global-mode 1)
+                              (add-to-list 'hippie-expand-try-functions-list
+                                           'yas-hippie-try-expand)))
+         (:name yasnippet-snippets))
 
        (cond
         ;; Set up recipes to support development against older
