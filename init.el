@@ -93,6 +93,10 @@ Also contains along with versions and other config.")
 
        '( ;; Fixing weird quirks and poor defaults
          (:name better-defaults)
+         (:name plantuml-mode
+                :after (progn (setq plantuml-default-exec-mode 'jar)
+                              (add-to-list 'auto-mode-alist
+                                           '("\\.puml$" . plantuml-mode))))
 
          ;; Modular in-buffer completion framework for Emacs
          (:name company-mode
