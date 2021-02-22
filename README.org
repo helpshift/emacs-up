@@ -86,6 +86,7 @@ programming languages used within Helpshift.
 - ~smex~: M-x interface with Ido-style fuzzy matching.
 - ~yasnippet~: a template system for Emacs.
 - ~rjsx-mode~: Major mode for JSX and JS files
+- ~plantuml-mode~: Major mode for PlantUML
 - ~prettier-js~: Auto formatting for JSX and JS files
 
 * Developing against Clojure 1.7

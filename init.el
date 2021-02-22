@@ -98,6 +98,12 @@ Also contains along with versions and other config.")
                               (add-to-list 'auto-mode-alist
                                            '("\\.puml$" . plantuml-mode))))
 
+         ;; Major mode for plantUML
+         (:name plantuml-mode
+                :after (progn (setq plantuml-default-exec-mode 'jar)
+                              (add-to-list 'auto-mode-alist
+                                           '("\\.puml$" . plantuml-mode))))
+
          ;; Modular in-buffer completion framework for Emacs
          (:name company-mode
                 :after (progn (require 'company)
