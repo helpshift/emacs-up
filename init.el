@@ -151,28 +151,110 @@ Also contains along with versions and other config.")
 
          ;; Emacs incremental completion and narrowing framework
          (:name helm
-                :after (progn ;; Explicitly turn off global `helm-mode'.
-                         ;; Only use it where required. Prefer `ido'
-                         ;; globally.
-                         (helm-mode -1)
-                         ;; Various useful key-bindings (other than Helm Defaults)
+                :after (progn
+                         (require 'helm-config)
+                         (setq helm-reuse-last-window-split-state t
+                               helm-move-to-line-cycle-in-source t
+                               helm-ff-file-name-history-use-recentf t
+                               helm-buffers-fuzzy-matching t
+                               helm-recentf-fuzzy-match t
+                               helm-mini-default-sources '(helm-source-buffers-list
+                                                           helm-source-recentf
+                                                           helm-source-bookmarks
+                                                           helm-source-buffer-not-found)
+                               helm-grep-ag-command
+                               "rg --color=always --colors 'match:style:underline' --colors 'match:bg:black' --colors 'match:fg:white' --smart-case --no-heading --line-number %s %s %s")
+                         (helm-define-key-with-subkeys global-map
+                           (kbd "C-c n") ?n 'helm-cycle-resume)
+                         (helm-mode +1)
+
+                         ;; Add `ido-completing-read' functions for
+                         ;; things that don't have default values in
+                         ;; `helm-completing-read-handlers-alist'.
+
+                         (push '(describe-function . ido-completing-read)
+                               helm-completing-read-handlers-alist)
+                         (push '(describe-variable . ido-completing-read)
+                               helm-completing-read-handlers-alist)
+                         (push '(describe-symbol . ido-completing-read)
+                               helm-completing-read-handlers-alist)
+                         (push '(debug-on-entry . ido-completing-read)
+                               helm-completing-read-handlers-alist)
+                         (push '(find-function . ido-completing-read)
+                               helm-completing-read-handlers-alist)
+                         (push '(disassemble . ido-completing-read)
+                               helm-completing-read-handlers-alist)
+                         (push '(trace-function . ido-completing-read)
+                               helm-completing-read-handlers-alist)
+                         (push '(trace-function-foreground . ido-completing-read)
+                               helm-completing-read-handlers-alist)
+                         (push '(trace-function-background . ido-completing-read)
+                               helm-completing-read-handlers-alist)
+
+                         ;; Remember helm candidate preferences.
+                         (require 'helm-adaptive)
+                         (setq helm-adaptive-history-file nil)
+                         (helm-adaptive-mode +1)
+
+                         (require 'helm-utils)
+                         (helm-popup-tip-mode +1)
+                         (setq helm-highlight-matches-around-point-max-lines '(30 . 30)
+                               helm-window-show-buffers-function #'helm-window-mosaic-fn)
+                         (add-hook 'find-file-hook #'helm-save-current-pos-to-mark-ring)
+
+                         (require 'helm-info)
+                         (global-set-key (kbd "C-h r") #'helm-info-emacs)
+
+                         ;; I want to use `helm-mini' and
+                         ;; `helm-find-files' as my primary entry
+                         ;; point into helm.
+                         (global-set-key (kbd "C-x b") 'helm-mini)
+                         (global-set-key (kbd "C-x C-f") 'helm-find-files)
+
                          ;; Useful Helm Defaults: C-x c i, C-x c I
                          ;; unset this because I plan to use it as a prefix key.
                          (global-set-key (kbd "C-x c r") nil)
                          (global-set-key (kbd "C-x c r b") 'helm-filtered-bookmarks)
                          (global-set-key (kbd "C-x c r r") 'helm-regexp)
-                         (global-set-key (kbd "C-x c C-b") 'helm-mini)
                          (global-set-key (kbd "M-y") 'helm-show-kill-ring)
                          (global-set-key (kbd "C-x c SPC") 'helm-all-mark-rings)
                          (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
-                         (global-set-key (kbd "C-x c r i") 'helm-register)))
-         (:name helm-ag
-                :after (progn (setq helm-ag-insert-at-point 'symbol
-                                    helm-ag-fuzzy-match t)
-                              (global-set-key (kbd "C-x c g a") 'helm-do-ag-project-root)
-                              (global-set-key (kbd "C-x c g s") 'helm-do-ag)
-                              ;; Move old behaviour to a new key
-                              (global-set-key (kbd "C-x c g g") 'helm-do-grep-ag)))
+                         (global-set-key (kbd "C-x c r i") 'helm-register)
+                         ;; I want to use <C-x c p> for helm-projectile
+                         (global-set-key (kbd "C-x c P") 'helm-list-emacs-process)
+                         ;; rebind tab to run persistent action. now
+                         ;; <tab> and <C-j> will both perform
+                         ;; persistent actions
+                         (define-key helm-map (kbd "<tab>")
+                           'helm-execute-persistent-action)
+
+                         (when (executable-find "curl")
+                           (setq helm-net-prefer-curl t))
+
+                         (with-eval-after-load 'projectile
+                           (defun helm-do-grep-project-root (&optional with-types)
+                             "Search in current project with. With WITH-TYPES, ask for file
+types to search in. Uses `projectile'."
+                             (interactive "P")
+                             (let ((default-directory (projectile-project-root)))
+                               (call-interactively 'helm-do-grep-ag)))
+
+                           (global-set-key (kbd "C-x c g a") 'helm-do-grep-project-root)
+                           (global-set-key (kbd "C-c s") 'helm-do-grep-project-root))
+
+                         (defun helm-do-grep-ag-with-directory (dir)
+                           "Do `helm-do-grep-ag' with `default-directory' set to DIR."
+                           (interactive "DDirectory to search in: ")
+                           (let ((default-directory dir))
+                             (call-interactively 'helm-do-grep-ag)))
+
+                         (global-set-key (kbd "C-x c g s") 'helm-do-grep-ag)
+                         (global-set-key (kbd "C-x c g g") 'helm-do-grep-ag-with-directory)))
+
+         (:name helm-descbinds
+                :after (progn (require 'helm-descbinds)
+                              (helm-descbinds-mode)))
+
          (:name helm-projectile
                 :before (progn (setq projectile-keymap-prefix (kbd "C-x c p")))
                 :after (progn (require 'helm-projectile)
@@ -186,8 +268,6 @@ Also contains along with versions and other config.")
                                                                      " "
                                                                    (format " Ptl[%s]"
                                                                            (projectile-project-name)))))
-                              ;; I want to use <C-x c p> for helm-projectile
-                              (global-set-key (kbd "C-x c P") 'helm-list-emacs-process)
                               (helm-projectile-on)))
 
          ;; Use ido (nearly) everywhere
@@ -197,7 +277,15 @@ Also contains along with versions and other config.")
          ;; It's Magit! An Emacs mode for Git.
          (:name magit
                 :after (progn (global-set-key (kbd "C-x g") 'magit-status)
-                              (setq magit-completing-read-function 'magit-ido-completing-read)))
+                              (setq magit-completing-read-function
+                                    #'helm--completing-read-default
+                                    magit-diff-refine-hunk t
+                                    magit-diff-refine-ignore-whitespace nil)
+
+                              (with-eval-after-load 'info
+                                (info-initialize)
+                                (add-to-list 'Info-directory-list
+                                             (concat el-get-dir "magit/")))))
 
          ;; Minor mode for editing parentheses
          (:name paredit
