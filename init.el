@@ -335,12 +335,13 @@ types to search in. Uses `projectile'."
          ;; Format JS, JSX files on save event.
          ;; Prerequisite: npm install -g prettier`
          (:name prettier-js
-                :after (add-hook 'rjsx-mode-hook 'Prettier-Js-mode))
+                :after (add-hook 'rjsx-mode-hook #'prettier-js-mode))
 
          ;; Major mode for JSX and JS files
          (:name rjsx-mode
                 :after (progn (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
                               (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))
+                              (add-to-list 'auto-mode-alist '("\\.json\\'" . rjsx-mode))
                               (setq js2-basic-offset 2
                                     js-switch-indent-offset 2)))
 
