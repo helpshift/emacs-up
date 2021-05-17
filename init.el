@@ -389,26 +389,26 @@ types to search in. Uses `projectile'."
 (setq recentf-exclude (list (concat tempfiles-dirname "*"))
       recentf-save-file (concat tempfiles-dirname "recentf")
       recentf-max-saved-items 1000
-      recentf-max-menu-items 1000)
-(recentf-mode)
+      recentf-max-menu-items 1000
+      recentf-menu-filter 'recentf-show-basenames)
+(recentf-mode 1)
 
 ;;; Interactively Do Things
 ;; Ido settings
 (require 'ido)
+(require 'ido-completing-read+)
 (setq ido-enable-flex-matching t
       ido-use-virtual-buffers t
       ido-create-new-buffer 'always
       ido-save-directory-list-file (concat tempfiles-dirname "ido.last"))
-(ido-mode t)
-(ido-everywhere)
-(require 'ido-completing-read+)
-(ido-ubiquitous-mode 1)
 (add-hook 'ido-make-buffer-list-hook 'ido-summary-buffers-to-end)
 
 ;;; Saveplace Settings
 (require 'saveplace)
+(require 'savehist)
 (setq save-place-file (concat tempfiles-dirname "places"))
-(save-place-mode)
+(save-place-mode 1)
+(savehist-mode 1)
 
 ;;; Desktop Settings
 (require 'desktop)
