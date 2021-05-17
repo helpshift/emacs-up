@@ -46,30 +46,29 @@ cider."
 
 (defun load-cider-config ()
   "Configuration for CIDER."
-  (eval-after-load 'clojure-mode
-    '(progn (add-hook 'clojure-mode-hook 'enable-paredit-mode)))
-  (eval-after-load 'cider-repl
-    '(progn (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
-            (define-key cider-repl-mode-map (kbd "C-M-q") 'prog-indent-sexp)
-            (define-key cider-repl-mode-map (kbd "C-c M-o") 'cider-repl-clear-buffer)))
-  (eval-after-load 'cider-mode
-    '(progn
-       (setq cider-repl-history-file
-             (concat tempfiles-dirname "cider-history.txt")
-             cider-repl-history-size most-positive-fixnum
-             cider-repl-wrap-history t
-             cider-repl-prompt-function 'cider-repl-prompt-on-newline
-             cider-annotate-completion-candidates t
-             cider-completion-annotations-include-ns 'always
-             cider-show-error-buffer 'always
-             cider-prompt-for-symbol nil
-             cider-auto-jump-to-error 'errors-only
-             cider-apropos-actions
-             '(("find-def" . cider--find-var)
-               ("display-doc" . cider-doc-lookup)
-               ("lookup-on-grimoire" . cider-grimoire-lookup)))
+  (with-eval-after-load 'clojure-mode
+    (add-hook 'clojure-mode-hook 'enable-paredit-mode))
+  (with-eval-after-load 'cider-repl
+    (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
+    (define-key cider-repl-mode-map (kbd "C-M-q") 'prog-indent-sexp)
+    (define-key cider-repl-mode-map (kbd "C-c M-o") 'cider-repl-clear-buffer))
+  (with-eval-after-load 'cider-mode
+    (setq cider-repl-history-file
+          (concat tempfiles-dirname "cider-history.txt")
+          cider-repl-history-size most-positive-fixnum
+          cider-repl-wrap-history t
+          cider-repl-prompt-function 'cider-repl-prompt-on-newline
+          cider-annotate-completion-candidates t
+          cider-completion-annotations-include-ns 'always
+          cider-show-error-buffer 'always
+          cider-prompt-for-symbol nil
+          cider-auto-jump-to-error 'errors-only
+          cider-apropos-actions
+          '(("find-def" . cider--find-var)
+            ("display-doc" . cider-doc-lookup)
+            ("lookup-on-clojuredocs" . cider-clojuredocs-lookup)))
 
-       (add-hook 'cider-mode-hook 'eldoc-mode))))
+    (add-hook 'cider-mode-hook 'eldoc-mode)))
 
 (defun turn-on-clj-refactor ()
   "Helper function to add as a hook to `clojure-mode'."
@@ -91,9 +90,8 @@ cider."
         ;; data-reader.
         cljr-ignore-analyzer-errors t)
 
-  (eval-after-load 'clojure-mode
-    '(progn
-       (add-hook 'clojure-mode-hook 'turn-on-clj-refactor))))
+  (with-eval-after-load 'clojure-mode
+    (add-hook 'clojure-mode-hook 'turn-on-clj-refactor)))
 
 (defvar hs--clojure16-env
   '((:name clojure-mode
@@ -143,18 +141,12 @@ cider."
 (defvar hs--common-env
   '(;; HELM interface to CIDER.
     (:name helm-cider
-           :after (progn (eval-after-load 'cider-mode
-                           '(progn (helm-cider-mode 1)
-                                   (setq helm-cider-apropos-actions
-                                         '(("Find definition" lambda
-                                            (candidate)
-                                            (cider-find-var nil candidate))
-                                           ("CiderDoc" . cider-doc-lookup)
-                                           ("Find on Grimoire" . cider-grimoire-lookup)))
-                                   ;; define keys for apropos that follow helm conventions
-                                   (define-key cider-mode-map (kbd "C-x c d n") 'cider-browse-ns)
-                                   (define-key cider-mode-map (kbd "C-x c d a") 'cider-apropos)
-                                   (define-key cider-mode-map (kbd "C-x c d e") 'cider-apropos-documentation))))))
+           :after (with-eval-after-load 'cider-mode
+                    (helm-cider-mode 1)
+                    ;; define keys for apropos that follow helm conventions
+                    (define-key cider-mode-map (kbd "C-x c d n") 'cider-browse-ns)
+                    (define-key cider-mode-map (kbd "C-x c d a") 'cider-apropos)
+                    (define-key cider-mode-map (kbd "C-x c d e") 'cider-apropos-documentation))))
   "Return a list of stable `el-get-sources' for development against Clojure.
 
 Handles both latest as well as older versions of Clojure.")
