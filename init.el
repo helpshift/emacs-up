@@ -100,7 +100,8 @@ Also contains along with versions and other config.")
 
        '(;; Jump to things in Emacs tree-style.
          (:name avy
-                :after (progn (global-set-key (kbd "M-g g") 'avy-goto-line)
+                :after (progn (global-set-key (kbd "M-g C-j") 'avy-resume)
+                              (global-set-key (kbd "M-g g") 'avy-goto-line)
                               (global-set-key (kbd "M-g SPC") 'avy-goto-word-1)
                               (avy-setup-default)))
 
