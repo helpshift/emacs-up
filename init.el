@@ -289,11 +289,42 @@ types to search in. Uses `projectile'."
 
          ;; Minor mode for editing parentheses
          (:name paredit
-                :after (progn (eval-after-load 'paredit
-                                '(progn
-                                   (define-key paredit-mode-map (kbd "C-o") 'paredit-open-round)))
-                              (add-hook 'emacs-lisp-mode-hook
-                                        'enable-paredit-mode)))
+                :after (progn (defvar paredit-major-modes
+                                '(emacs-lisp-mode lisp-mode clojure-mode
+                                                  cider-repl-mode ielm-mode)
+                                "List of modes where I want paredit to always work.")
+
+                              ;; hideshow.el does not have anything to
+                              ;; do with paredit, but I want the
+                              ;; minor-mode to be loaded in exactly
+                              ;; the same places as paredit. Hence
+                              ;; adding the coniguration here.
+                              (load-library "hideshow")
+                              (require 'hideshow)
+                              (load-library "paren")
+                              (require 'paren)
+                              (require 'paredit)
+
+                              (defun turn-on-paredit ()
+                                "Utility function to turn on Paredit."
+                                (paredit-mode 1)
+                                (show-paren-mode 1)
+                                (hs-minor-mode 1))
+
+                              (setq show-paren-style 'mixed)
+
+                              (dolist (m paredit-major-modes)
+                                (add-hook `,(intern (concat (symbol-name m) "-hook"))
+                                          #'turn-on-paredit))
+
+                              (with-eval-after-load 'paredit
+                                (define-key paredit-mode-map (kbd "C-o") 'paredit-open-round))
+
+                              (with-eval-after-load 'hideshow
+                                ;; Unbind `C-h' this should only be used for help.
+                                (define-key hs-minor-mode-map (kbd "C-c @ C-h") nil)
+                                (define-key hs-minor-mode-map (kbd "C-c @ @") 'hs-toggle-hiding)
+                                (define-key hs-minor-mode-map (kbd "C-c @ 2") 'hs-toggle-hiding))))
 
          ;; Major mode for plantUML
          (:name plantuml-mode
