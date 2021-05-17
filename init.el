@@ -141,8 +141,13 @@ Also contains along with versions and other config.")
 
          ;; On-the-fly syntax checking
          (:name flycheck
-                :after (progn (setq flycheck-global-modes '(not org-mode))
+                :after (progn (setq flycheck-global-modes '(not org-mode)
+                                    flycheck-emacs-lisp-load-path 'inherit)
                               (global-flycheck-mode)))
+
+         (:name flycheck-inline
+                :after (with-eval-after-load 'flycheck
+                         (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)))
 
          ;; Emacs incremental completion and narrowing framework
          (:name helm
