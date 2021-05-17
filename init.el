@@ -11,7 +11,7 @@
 (when (version< emacs-version "27")
   (error "Unsupported Emacs Version! Please upgrade to a newer Emacs.  Emacs installation instructions: https://www.gnu.org/software/emacs/download.html"))
 
-(defvar emacs-up--version "v3.4.1"
+(defvar emacs-up--version "v3.5.0"
   "The current version of the Emacs Up Starter Kit.")
 
 (defun emacs-up-version ()

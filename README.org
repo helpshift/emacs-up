@@ -13,6 +13,14 @@ programming languages used within Helpshift.
   #+begin_example
     $ brew cask install emacs
   #+end_example
+- Please install the following packages (prerequisites) using your
+  system package manager:
+  + [[http://git-scm.com/][git]]
+  + [[http://aspell.net/][aspell]]
+  + [[https://www.gnu.org/software/automake/][automake]]
+  + [[https://www.gnu.org/software/texinfo/][texinfo]]
+  + [[http://www.rebol.net/docs/makedoc.html][makedoc]]
+  + [[https://github.com/BurntSushi/ripgrep#installation][ripgrep]]
 - Out of the box, ~emacs-up~ supports development on Clojure versions
   ~1.8~ and Java ~8~ (and above). If you are someone who has to
   program against Clojure ~1.7~ , ~1.6~ or older versions, refer to
@@ -41,8 +49,10 @@ programming languages used within Helpshift.
   one-time thing).
 - Review the next section in this README. It has details of external
   tools and dependencies that you need to install for working with
-  certain packages. Install these dependencies. (Look for the *Needs
-  Install* note)
+  certain packages. Install these dependencies for the best
+  experience. They are:
+  + [[https://github.com/borkdude/clj-kondo/blob/master/doc/install.md][clj-kondo]]
+  + [[https://github.com/greglook/cljstyle#installation][clj-style]]
 - (For beginners) Go through the tutorial in the ~docs/~ folder to get
   started.
 
@@ -68,26 +78,19 @@ programming languages used within Helpshift.
     following installation instructions at
     https://github.com/greglook/cljstyle#installation
 - ~helm~: Emacs incremental completion and narrowing framework.
-- ~helm-ag~: The silver search with helm interface.
-  + *Note: Needs Install*: This package depends on Ag - The Silver
-    Searcher. Installing Ag will allow you to levarage super fast
-    searches on files and data from within Emacs. Installing this is
-    optional, not installing it will mean that only ~helm-ag~ will
-    cease to work. You can find instructions to install Ag here:
-    https://github.com/ggreer/the_silver_searcher.
+  + *Note: Needs Install*: We recommend installing Ripgrep to search
+    across files on disk. Installing ~rg~ will allow you to leverage
+    super fast searches on files and data from within Emacs.
 - ~helm-cider~: ~helm~ integration for ~cider~.
 - ~helm-projectile~: ~helm~ integration for ~projectile~.
-- ~ido~: Interactively do things with buffers and files
-- ~ido-completing-read-plus~: Fancy completion all over Emacs, not
-  just for buffers and files.
 - ~magit~: An Emacs mode for Git.
 - ~paredit~: Minor mode for editing parentheses.
+- ~plantuml-mode~: Major mode for PlantUML
 - ~projectile~: Project navigation and management library for Emacs.
+- ~prettier-js~: Auto formatting for JSX and JS files
+- ~rjsx-mode~: Major mode for JSX and JS files
 - ~smex~: M-x interface with Ido-style fuzzy matching.
 - ~yasnippet~: a template system for Emacs.
-- ~rjsx-mode~: Major mode for JSX and JS files
-- ~plantuml-mode~: Major mode for PlantUML
-- ~prettier-js~: Auto formatting for JSX and JS files
 
 * Developing against Clojure 1.7
   If you are developing against Clojure 1.7, you need to install older
@@ -132,7 +135,7 @@ programming languages used within Helpshift.
     (This is a one-time thing).
 
 * Updating Emacs Up
-  The current version of ~emacs-up~ is ~v3.4.1~. If you are updating
+  The current version of ~emacs-up~ is ~v3.5.0~. If you are updating
   an existing installation of ~emacs-up~, the ~NEWS.org~ file lists
   major changes and update instructions.
 

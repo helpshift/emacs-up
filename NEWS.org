@@ -1,5 +1,26 @@
+* v3.5.0
+<2021-05-17 Mon>
+
+This is a breaking change. It moves away completely from ~ido~, in
+favor of ~helm~. It also changes the ~el-get~ source to use my fork of
+the project: ~https://github.com/vedang/el-get~. The easiest way to
+upgrade safely is to *delete your original installation* and clone
+this repository from scratch.
+** Changes
+- Update the Cider suite of libraries to the latest version
+  + ~cider~: v1.1.0
+  + ~cider-nrepl~: 0.26.0
+  + ~clj-refactor~: v2.5.1
+  + ~refactor-nrepl~: 2.5.0
+  + ~clojure-mode~: latest version, master branch
+- Use my fork of ~el-get~ as the main branch
+- Replace ~ido~ entirely, in favor of ~helm~
+- Update configurations for all core libraries
+- Change Emacs supported version to 27.
+
 * v3.4.1
 <2020-08-23 Sun>
+
 This is not a breaking change. It is a bug-fix change. However, the
 easiest way to upgrade safely is still to *delete your original
 installation* and clone this repository from scratch. This will also
@@ -16,6 +37,7 @@ get the latest versions of dependent libraries (like ~clojure-mode~)
 
 * v3.4.0
 <2020-06-28 Sun>
+
 This is not a breaking change. However, the easiest way to upgrade
 safely is still to *delete your original installation* and clone this
 repository from scratch. This will also get the latest versions of
@@ -31,6 +53,7 @@ dependent libraries (like ~clojure-mode~) (which is a good thing)
 
 * v3.3.0
 <2019-11-20 Wed>
+
 This is not a breaking change. However, the easiest way to upgrade
 safely is still to *delete your original installation* and clone this
 repository from scratch. This will also get the latest versions of
@@ -43,6 +66,7 @@ dependent libraries (like ~clojure-mode~) (which is a good thing)
 
 * v3.2.0
 <2019-09-17 Tue>
+
 This is not a breaking change. However, the easiest way to upgrade
 safely is still to *delete your original installation* and clone this
 repository from scratch. This will also get the latest versions of
@@ -57,6 +81,7 @@ dependent libraries (like ~clojure-mode~) (which is a good thing)
 
 * v3.1.0
 <2019-01-15 Tue>
+
 This is not a breaking change. However, the easiest way to upgrade
 safely is still to *delete your original installation* and clone this
 repository from scratch. This will also get the latest versions of
@@ -66,6 +91,7 @@ dependent libraries (like ~clojure-mode~) (which is a good thing)
 
 * v3.0.0
 <2019-01-06 Sun>
+
 This is a *Breaking Change* (via version conflict) upgrade. I've
 upgraded the version of one of the packages that ~emacs-up~ depends
 upon, and upgrading your local setup may not be as straight-forward
@@ -87,6 +113,7 @@ Restart Emacs.
 
 * v2.0.1
 <2017-01-02 Mon>
+
 This is a minor, safe upgrade.
 ** Changes:
 - Change the key-bindings for using ~helm-ag~. Replace ~M-g~ with
@@ -95,6 +122,7 @@ This is a minor, safe upgrade.
 
 * v2.0.0
 <2016-11-06 Sun>
+
 This is a *Breaking Change* (via version conflict) upgrade. I've
 upgraded the version of one of the packages that ~emacs-up~ depends
 upon, and upgrading your local setup may not be as straight-forward as
@@ -122,6 +150,7 @@ Restart Emacs.
 
 * v1.0.0
 <2016-10-09 Sun>
+
 This is a *Breaking Change* upgrade. To upgrade your ~emacs-up~,
 *delete your original installation* and clone this repository from
 scratch. Follow the updated setup instructions in the ~README.org~
@@ -135,6 +164,7 @@ I've made the following major changes:
 
 * v0.1.0
 <2016-09-21 Wed>
+
 This initial version of ~emacs-up~ is built around ~package.el~ which
 is the default package management system for Emacs.
 
