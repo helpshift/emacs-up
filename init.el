@@ -355,7 +355,9 @@ types to search in. Uses `projectile'."
                 :after (progn (yas-global-mode 1)
                               (add-to-list 'hippie-expand-try-functions-list
                                            'yas-hippie-try-expand)))
-         (:name yasnippet-snippets))
+         (:name yasnippet-snippets)
+         (:name yatemplate
+                :after (progn (auto-insert-mode +1))))
 
        (cond
         ;; Set up recipes to support development against older
