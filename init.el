@@ -129,16 +129,15 @@ Also contains along with versions and other config.")
          ;; an Emacs jump to definition package for 40+ languages
          (:name dumb-jump
                 :after (progn (dumb-jump-mode)
-                              (define-key dumb-jump-mode-map (kbd "C-c d g")
-                                'dumb-jump-go)
-                              (define-key dumb-jump-mode-map (kbd "C-c d b")
-                                'dumb-jump-back)
-                              (define-key dumb-jump-mode-map (kbd "C-c d q")
-                                'dumb-jump-quick-look)
-                              ;; Don't mess with the default
-                              ;; indentation keybinding
-                              (define-key dumb-jump-mode-map (kbd "C-M-q")
-                                nil)))
+                              (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+                              (define-key dumb-jump-mode-map (kbd "C-c d g") 'dumb-jump-go)
+                              (define-key dumb-jump-mode-map (kbd "C-c d b") 'dumb-jump-back)
+                              ;; Don't mess with the default indentation
+                              ;; keybinding
+                              (define-key dumb-jump-mode-map (kbd "C-M-q") nil)
+                              (define-key dumb-jump-mode-map (kbd "C-M-p") nil)
+                              (setq dumb-jump-selector 'popup
+                                    dumb-jump-prefer-searcher 'rg)))
 
          ;; On-the-fly syntax checking
          (:name flycheck
