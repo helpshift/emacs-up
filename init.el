@@ -67,6 +67,12 @@ Ideally, this will be ~/.emacs.d.")
 ;; Add our personal recipes to el-get's recipe path
 (add-to-list 'el-get-recipe-path el-get-my-recipes)
 
+(with-eval-after-load 'info
+  (progn
+    (info-initialize)
+    (add-to-list 'Info-directory-list
+                 (concat el-get-dir "el-get/"))))
+
 ;;; Load packaging info for clojure
 (defvar clj-packages-file
   (concat dotfiles-dirname "hs-clj-packages.el")
