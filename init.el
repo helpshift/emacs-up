@@ -8,7 +8,7 @@
 
 ;;; Code:
 
-(when (version< emacs-version "25")
+(when (version< emacs-version "27")
   (error "Unsupported Emacs Version! Please upgrade to a newer Emacs.  Emacs installation instructions: https://www.gnu.org/software/emacs/download.html"))
 
 (defvar emacs-up--version "v3.4.1"

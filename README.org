@@ -8,7 +8,7 @@ programming languages used within Helpshift.
 
 * Installation
 - The minimum supported Emacs version for this configuration is
-  Emacs 25. You can install the latest Emacs through Homebrew as
+  Emacs 27. You can install the latest Emacs through Homebrew as
   follows:
   #+begin_example
     $ brew cask install emacs
