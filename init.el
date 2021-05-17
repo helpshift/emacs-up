@@ -118,12 +118,13 @@ Also contains along with versions and other config.")
          ;; Modular in-buffer completion framework for Emacs
          (:name company-mode
                 :after (progn (require 'company)
-                              (add-hook 'after-init-hook 'global-company-mode)
-                              (setq-default company-lighter " cmp")
-                              (define-key company-active-map
-                                [tab] 'company-complete)
-                              (define-key company-active-map
-                                (kbd "TAB") 'company-complete)))
+                              (add-hook 'after-init-hook #'global-company-mode)
+                              (setq company-require-match nil
+                                    company-tooltip-align-annotations t)
+                              (with-eval-after-load 'company
+                                (setq-default company-lighter " cmp")
+                                (define-key company-active-map
+                                  (kbd "TAB") 'company-complete))))
 
          ;; an Emacs jump to definition package for 40+ languages
          (:name dumb-jump
