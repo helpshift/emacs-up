@@ -3,6 +3,10 @@
 #+EMAIL: vedang@helpshift.com
 #+DATE: [2016-07-11 Mon]
 
+If you have opened this document inside Emacs and do not now how to
+open up the sections to see the content, press <Shift tab> three times
+(until the minibuffer at the bottom of the screen says SHOW ALL).
+
 * What is Emacs?
   - Emacs is a Lisp programming environment.
   - ...which happens to be good for editing things.
@@ -11,32 +15,32 @@
          Key and press x.
     + If you see M-x :: this means that you should hold down the Meta
          Key (more on what this is in the next point) and press x.
-  - You should remap your Caps Lock key to become your Ctrl Key. You
-    can do this by going to:
-    *System Preferences* -> *Keyboard* -> *Modifier Keys*
-    -> _Change Caps Lock key to mean Ctrl_
+** You should remap your Caps Lock key to become your Ctrl Key.
+   You can do this by going to:
+   *System Preferences* -> *Keyboard* -> *Modifier Keys*
+   -> _Change Caps Lock key to mean Ctrl_
   - This configuration sets your Cmd key to be the Meta key inside
     Emacs. So every time you are supposed to press the Meta key, you
     should press the Cmd key.
-  - You should remap your Lock Screen shortcut in Mac to free up
-    =C-M-q=. This is a critical shortcut for Lisp programming in
-    Emacs.
-    + Launch System Preferences and go to the Keyboard pane.
-    + Select the 'Shortcuts' tab.
-    + From the list on the left, select 'App Shortcuts'.
-    + Click on the plus (+) button below to add your new shortcut.
-    + In the dialog box we'll want to leave 'All Applications'
-      selected in the first menu. Enter 'Lock Screen' as the Menu
-      Title. Please note this has to be exactly the same name for this
-      to work. (It has to do with Automator entries in Mac). Finally,
-      enter your keyboard shortcut. Let's go with Option+Shift+Q
-    + Click Add and you're all done!
+** You should remap your Lock Screen shortcut in Mac
+   The default lock screen shortcut is =C-M-q=, but this is a critical
+   shortcut for Lisp programming in Emacs. In order to change it:
+   + Launch System Preferences and go to the Keyboard pane.
+   + Select the 'Shortcuts' tab.
+   + From the list on the left, select 'App Shortcuts'.
+   + Click on the plus (+) button below to add your new shortcut.
+   + In the dialog box we'll want to leave 'All Applications'
+     selected in the first menu. Enter 'Lock Screen' as the Menu
+     Title. Please note this has to be exactly the same name for this
+     to work. (It has to do with Automator entries in Mac). Finally,
+     enter your keyboard shortcut. Let's go with Option+Shift+Q
+   + Click Add and you're all done!
 
 * A more important question: Why should you care?
-  You should care because the editor is one of the core tools you will
-  employ when programming. You will spend a large amount of your time
-  inside an editor. Therefore, you should choose a powerful editor and
-  master it.
+  You should care about your editor because it is one of the core
+  tools you will employ when programming. You will spend a large
+  amount of your time inside an editor. Therefore, you should choose a
+  powerful editor and master it.
 
 * Getting started with Emacs: Problems
   - Completely different terminology.
@@ -53,7 +57,7 @@
   - We are going to fix that!
 
 * What is my 'init' file?
-  - ~/.emacs.d/init.el
+  - =~/.emacs.d/init.el=
   - This loads extra config over the defaults when you start Emacs.
 
 * Basic Operations
@@ -63,6 +67,11 @@
   - C-x k :: ~kill-buffer~ Close a file
 
 * Terminology
+  Terminology in Emacs is unfamiliar because Emacs was designed before
+  the terms you are familiar with today were invented! Spend some time
+  understanding the following terms in order to better read any
+  tutorial or blogpost on Emacs. Ask your mentor to explain these to
+  you:
   - Buffers
   - Windows
   - Frames
@@ -71,9 +80,11 @@
     - Yanking
 
 * A little theory: Modes
+  Once again, ask your mentor to explain to you what these terms mean
+  inside Emacs. Minor modes enable all the composability of
+  functionality inside Emacs.
   - Major Mode
   - Minor Modes
-  - Composability
 
 * Helping yourself
   - C-h :: The Great Emacs Self-Help system.
@@ -227,7 +238,10 @@
    - M-y :: ~helm-show-kill-ring~ (Access the kill-ring via helm)
    - C-x c r b :: ~helm-filtered-bookmarks~ (Access bookmarks via helm)
    - C-x c r i :: ~helm-register~ (Access registers via helm)
-   - C-x c C-b :: ~helm-mini~ (Buffer and File selector via helm)
+   - C-x c b :: ~helm-resume~ (Go back to the previous Helm Session)
+   - C-c n :: ~helm-resume~ (Go back through all the Helm sessions you
+     have open, repeatedly click C-c n to cycle)
+   - C-x b :: ~helm-mini~ (Buffer and File selector via helm)
 
 ** Avy: Jumping elsewhere
    - M-g g :: ~avy-goto-line~ (Jump to line start or line number)
