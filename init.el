@@ -59,7 +59,7 @@ Ideally, this will be ~/.emacs.d.")
       (url-retrieve-synchronously
        "https://raw.github.com/vedang/el-get/master/el-get-install.el")
     (let ((el-get-git-install-url "https://github.com/vedang/el-get.git")
-          (el-get-install-branch "fix-obsolete-definition")
+          (el-get-install-branch "master")
           el-get-install-skip-emacswiki-recipes)
       (goto-char (point-max))
       (eval-print-last-sexp))))
