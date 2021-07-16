@@ -431,5 +431,6 @@ types to search in. Uses `projectile'."
 (require 'package)
 (package-initialize)
 
+(server-start)
 (provide 'init)
 ;;; init.el ends here
