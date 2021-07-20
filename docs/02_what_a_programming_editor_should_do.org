@@ -1,0 +1,42 @@
+#+TITLE: Things your programming editor should be able to do.
+#+SUBTITLE: And how I do them in Emacs.
+#+AUTHOR: Vedang Manerikar
+#+EMAIL: vedang@helpshift.com
+#+DATE: [2016-11-11 Fri]
+
+This is an incomplete list, off the top of my head in these last 10
+minutes. Please help me make it better.
+
+* company: Complete Anything
+  - completion of functions, variables, types, namespaces, classes, plain-text.
+  - completion of arguments, with doc-strings
+* xref: Jumping to source and back
+  - M-. :: Jump to the source of something
+  - M-, :: Jump back from the source of something
+* flycheck: On the fly syntax checking
+  - C-c ! l :: List all errors
+  - C-c ! n :: Go to the next error
+  - C-c ! p :: Go to the previous error
+  - M-g M-n :: Go to the next error
+  - M-g M-p :: Go to the previous error
+* projectile: Understanding projects
+  - C-x c p p :: Switch to some project on disk
+  - C-x c p f :: Find a file in a project
+  - C-c s :: Search in project
+* magit: Git from the editor
+  - C-x g :: Access the magit-status buffer for your project.
+  - C-c C-c :: Access the full set of possible actions in your buffer
+* Bonus Points
+  - Refactoring
+    + Clean-up namespaces
+    + Import missing namespaces
+    + Basic code refactorings
+  - Find usages
+  - Debugging
+* TODO REPL Features
+  :LOGBOOK:
+  - State "TODO"       from              [2021-07-20 Tue 23:32]
+  :END:
+** History
+   - M-p :: previous command
+   - M-n :: next command

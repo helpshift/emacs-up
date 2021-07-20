@@ -1,0 +1,11 @@
+#+TITLE: A Demo of my day in Emacs
+#+AUTHOR: Vedang Manerikar
+#+EMAIL: vedang@helpshift.com
+#+DATE: [2017-03-17 Fri]
+
+* Org-Mode
+** Agenda
+** Capture
+* Shell
+* It's All Text
+* Email

@@ -25,14 +25,13 @@
 * Test related operations
   - C-c C-t C-n :: Run all the tests in this namespace. (~cider-test-run-ns-tests~)
 
-* TODO [0/10] Add sections explaining how to do the following things
-  - [ ] paredit
+* TODO [3/10] Add sections explaining how to do the following things
+  - [X] paredit
+  - [X] jumping (Emacs)
+  - [X] searching in project / directory
   - [ ] find-usages
   - [ ] rename-symbols
   - [ ] import / require
   - [ ] clean namespaces
-  - [ ] eastwood
-  - [ ] jumping (Emacs)
-  - [ ] searching in project / directory
+  - [ ] linting
   - [ ] debugging
-  - [ ] other keybindings in helpshift/emacs-up

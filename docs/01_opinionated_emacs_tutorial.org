@@ -209,17 +209,26 @@ open up the sections to see the content, press <Shift tab> three times
 ** query-replace-regex
    - M-x query-replace-regex
 
-* Levelling up
-** Ido: Candidates for Completion
-   Interactive-do : The inbuilt super powerful completion and
-   suggestion feature.
-
-   - C-s   :: ~ido-next-match~
-   - C-r   :: ~ido-prev-match~
-   - C-SPC :: ~ido-restrict-to-matches~
+* Leveling up
+** Helm : Completion for the win
+   - C-x c :: the default helm prefix key
+   - C-x b :: ~helm-mini~ (Buffer and File selector via helm)
+   - C-x C-f :: ~helm-find-files~ (Open a new/existing file)
+   - C-x c i :: ~helm-semantic-or-imenu~ (Access imenu via helm)
+   - C-x c b :: ~helm-resume~ (Go back to the previous Helm Session)
+   - C-c n :: ~helm-resume~ (Go back through all the Helm sessions you
+     have open, repeatedly click C-c n to cycle)
+   - M-y :: ~helm-show-kill-ring~ (Access the kill-ring via helm)
+   - C-x c r b :: ~helm-filtered-bookmarks~ (Access bookmarks via helm)
+   - C-x c r i :: ~helm-register~ (Access registers via helm)
 
 ** Imenu : Suggestions for places to Jump to
    - M-x imenu
+   - C-x c i  :: binding for imenu in ~helpshift/emacs-up~
+** Avy: Jumping elsewhere
+   - M-g g :: ~avy-goto-line~ (Jump to line start or line number)
+   - M-g SPC :: ~avy-goto-word-1~ (Jump to a word by typing start CHAR)
+   - M-g C-j :: ~avy-resume~ (Resume the last jump session)
 
 ** A segue into temporary and permanent markers
    - Registers
@@ -232,22 +241,10 @@ open up the sections to see the content, press <Shift tab> three times
      + C-x r b   :: ~bookmark-jump~
      + C-x r l   :: ~bookmark-list~
 
-** Helm : More completion and suggestion
-   - C-x c :: the default helm prefix key
-   - C-x c i :: ~helm-semantic-or-imenu~ (Access imenu via helm)
-   - M-y :: ~helm-show-kill-ring~ (Access the kill-ring via helm)
-   - C-x c r b :: ~helm-filtered-bookmarks~ (Access bookmarks via helm)
-   - C-x c r i :: ~helm-register~ (Access registers via helm)
-   - C-x c b :: ~helm-resume~ (Go back to the previous Helm Session)
-   - C-c n :: ~helm-resume~ (Go back through all the Helm sessions you
-     have open, repeatedly click C-c n to cycle)
-   - C-x b :: ~helm-mini~ (Buffer and File selector via helm)
-
-** Avy: Jumping elsewhere
-   - M-g g :: ~avy-goto-line~ (Jump to line start or line number)
-   - M-g SPC :: ~avy-goto-word-1~ (Jump to a word by typing start CHAR)
-
-* Lispy Editing with Paredit
+* TODO Lispy Editing with Paredit
+  :LOGBOOK:
+  - State "TODO"       from              [2021-07-20 Tue 23:33]
+  :END:
    Open a clojure or emacs lisp file to try these commands out:
    - ( :: opening brackets - excellent example of digit keys
    - C-) :: ~paredit-forward-slurp-sexp~
